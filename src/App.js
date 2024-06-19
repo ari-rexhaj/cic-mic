@@ -133,7 +133,7 @@ function wallCheck(brickDiv, map) {
   return foundNewWall;
 }
 
-let gameState = 0; //0 is pregame, 1 is midgame, 2 is endgame, 3 is game over
+let gameState = 0; //0 is pregame, 1 is midgame, 2 is game over
 let preGameRounds = 9 * 2; //amount of turns before the pregame is finished/amount of bricks per team can place before pregame is over
 let playing = 1; //what team is playing
 let enemy = 2;
@@ -210,6 +210,18 @@ function App() {
     }
     
     if(gameState === 1) { //midgame
+      let endgame = false
+      //endgame
+      console.log("team1",brickList[0],"team2",brickList[1])
+      if(brickList[playing-1].length < 4) {
+        endgame = true
+        
+        if(brickList[playing-1].length < 3) {
+          gameState = 2
+          console.log("game over")
+        }
+      }
+
       if(currentBrick === undefined) {
         if(brickDiv.target.id.split("-")[2] !== playing.toString()) {
           console.log(`team${playing} must click a brick on your team`)
@@ -232,8 +244,27 @@ function App() {
       }
 
       gotoBrick = brickDiv.target.id
-      let [moveSuccess,newMap] = moveBrick(currentBrick,gotoBrick)
+      let moveSuccess = false
+      let newMap = undefined
+
+      if(!endgame) {
+        moveSuccess = moveBrick(currentBrick,gotoBrick)[0]
+        newMap = moveBrick(currentBrick,gotoBrick)[1]
+      }
+      else {
+        moveSuccess = true
+        newMap = endgameMoveBrick(currentBrick,gotoBrick)
+      }
+
       if(moveSuccess) {
+
+        for(let i in brickList[playing-1]) {
+          if(brickList[playing-1][i] === currentBrick) {
+            brickList[playing-1].splice(i,1)
+            brickList[playing-1].push(`${gotoBrick.split("-")[0]}-${gotoBrick.split("-")[1]}-${playing}`)
+          }
+        }
+
 
         for(let i in wallList[playing-1]) {
           if(wallList[playing-1][i].includes(currentBrick)) {
@@ -279,6 +310,17 @@ function App() {
         newWall = false;
       }
     }
+  }
+
+  function endgameMoveBrick(current,goto) {
+    let [x1,y1,team] = current.split("-")
+    let [x2,y2] = goto.split("-")
+
+    let newGameMap = [...gameMap]
+    newGameMap[x1][y1] = 0
+    newGameMap[x2][y2] = parseInt(team)
+    setGameMap(newGameMap)
+    return newGameMap
   }
 
   function moveBrick(current,goto) {
