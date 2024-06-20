@@ -32,6 +32,11 @@ the first player to get the enemy players brick count to 2 wins. That is to say 
 - main menu screen
 - home screen/startup menu
 - VS bot
+- - literally the perfect bot (god)
+- - the perfect bot but with 80% chance to misplay (master)
+- - the perfect bot but with 60% chance to misplay (challenger)
+- - the perfect bot but with 40% chance to misplay (novice)
+- - the perfect bot but with 20% chance to misplay (beginner)
 - online multiplayer
 - quickmatch?
 - adjusting the map lines so they ACTUALLY line up
