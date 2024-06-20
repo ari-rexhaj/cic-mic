@@ -49,7 +49,6 @@ function wallCheck(brickDiv, map) {
         `1-${spot}-${map[1][spot]}`,
         `2-${spot}-${map[2][spot]}`,
       ]);
-      console.log("wall found 1", wallList);
       foundNewWall = true;
     }
     spot = parseInt(spot) + 2;
@@ -69,7 +68,6 @@ function wallCheck(brickDiv, map) {
           map[layer][spotLoopList[spot + 1]]
         }`,
       ]);
-      console.log("wall found 2", wallList);
       foundNewWall = true;
     }
   } else {
@@ -90,7 +88,6 @@ function wallCheck(brickDiv, map) {
         }`,
         `${layer}-${spotLoopList[spot]}-${map[layer][spotLoopList[spot]]}`,
       ]);
-      console.log("wall found 3", wallList);
       foundNewWall = true;
     }
 
@@ -104,7 +101,6 @@ function wallCheck(brickDiv, map) {
         }`,
         `${layer}-${spotLoopList[spot]}-${map[layer][spotLoopList[spot]]}`,
       ]);
-      console.log("wall found 4", wallList);
       foundNewWall = true;
     }
   }
@@ -113,18 +109,17 @@ function wallCheck(brickDiv, map) {
 
 let gameState = 0; //0 is pregame, 1 is midgame, 2 is game over
 let preGameRounds = 9 * 2; //amount of turns before the pregame is finished/amount of bricks per team can place before pregame is over
-let playing = 1; //what team is playing
-let enemy = 2;
-let newWall = false;
-let brickList = [[], []];
+let playing = 1; //what team is playing 1 = team1 and 2 = team2, 0 is used to represent empty space so we do not use that value for this variable
+let enemy = 2;  //what team is waiting for their turn
+let newWall = false;  //has a new wall been found?
+let brickList = [[], []]; //list of all bricks on board per team
+let possibleMoves = undefined
 
 let currentBrick = undefined
 let gotoBrick = undefined
-let possibleMoves = undefined
 
 function App() {
-  function gameMaster(brickDiv) {
-    //controls the game
+  function gameMaster(brickDiv) {  //controls the game
     function switchTurn() {
       if (playing === 1) {
         playing = 2;
@@ -158,6 +153,11 @@ function App() {
             brickList[enemy - 1].splice(i, 1);
           }
         }
+        if(brickList[enemy-1].length < 3) {
+          gameState = 2
+          console.log(`game over, team${playing} won the game`)
+        }
+
         updateMapSpot(brickDiv, 0);
         newWall = false;
         switchTurn();
@@ -193,11 +193,6 @@ function App() {
       //endgame
       if(brickList[playing-1].length < 4) {
         endgame = true
-        
-        if(brickList[playing-1].length < 3) {
-          gameState = 2
-          console.log("game over")
-        }
       }
 
       if(currentBrick === undefined) {
@@ -373,7 +368,6 @@ function App() {
 
     let newGameMap = [...gameMap];
     newGameMap[layer][spot] = team;
-    //console.log("layer:",layer,"spot:",spot,gameMap)
     setGameMap(newGameMap);
     return newGameMap;
   }
