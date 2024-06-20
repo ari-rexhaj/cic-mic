@@ -158,7 +158,7 @@ function App() {
             brickList[enemy - 1].splice(i, 1);
           }
         }
-        updateMapSpot(brickDiv, "0");
+        updateMapSpot(brickDiv, 0);
         newWall = false;
         switchTurn();
         return;
@@ -243,7 +243,7 @@ function App() {
       }
 
       if(moveSuccess) {
-
+        console.log("to",gotoBrick)
         for(let i in brickList[playing-1]) {
           if(brickList[playing-1][i] === currentBrick) {
             brickList[playing-1].splice(i,1)
@@ -261,6 +261,20 @@ function App() {
 
         newWall = wallCheck(brickDiv,newMap)
         currentBrick = undefined
+
+        if(!endgame) {
+          let hasAPossibleMove = false
+          for (let brick of brickList[enemy-1]) {
+            if(possibleMovesGen(brick).length !== 0) {
+              hasAPossibleMove = true
+              break
+            }
+          }
+          if(!hasAPossibleMove) {
+            console.log(`team${enemy} has no possible moves, team${playing} plays again`)
+            return
+          }
+        }
       }
       else {
         console.log("cannot move there, try again")
@@ -318,8 +332,8 @@ function App() {
     let possibleMovements = []
     x1 = parseInt(x1)
     y1 = parseInt(y1)
-
-    if(y1 % 2 === 1) {
+    console.log(gameMap)
+    if(y1 % 2 === 1) {  //may be a bug here somewhere
       if(gameMap[layerMoveLoop[x1+2]][spotMoveLoop[y1+1]] === 0) {
         possibleMovements.push(`${layerMoveLoop[x1+2]}-${spotMoveLoop[y1+1]}-0`)
       }
