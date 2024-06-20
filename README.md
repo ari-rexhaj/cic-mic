@@ -2,7 +2,7 @@
 open the folder in your terminal, then do the following 
 - run the following in your terminal: **npm install -i** 
 - to start the website run: **npm start**
-### **THIS IS STILL UNFINISHED, EXPECT BUGS**
+### **GAMEPLAY IS FINISHED BUT NEEDS TESTING, BUGS MAY OCCUR**
 ## how the game works:
 ### rules for any gamestate:
 1. if a player gets 3 bricks in a straight horizontal or vertical line, they make what is called a wall.

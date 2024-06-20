@@ -119,6 +119,7 @@ let brickList = [[], []]; //list of all bricks on board per team
 let possibleMoves = undefined
 
 let currentBrick = undefined
+let currentBrickDiv = undefined
 let gotoBrick = undefined
 
 function App() {
@@ -205,22 +206,69 @@ function App() {
       if(currentBrick === undefined) {
         if(brickDiv.target.id.split("-")[2] !== playing.toString()) {
           console.log(`team${playing} must click a brick on your team`)
+          if(enemy === 1) {
+            brickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
+          }
+          else {
+            brickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
+          }
+
+          setTimeout(() => {
+            if(enemy === 1) {
+              brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
+            }
+            else {
+              brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
+            }
+          },300)
           return
         }
         currentBrick = brickDiv.target.id
+        currentBrickDiv = brickDiv
         possibleMoves = possibleMovesGen(currentBrick)
         if(possibleMoves.length === 0 && !endgame) {
           currentBrick = undefined
+          currentBrickDiv = undefined
           console.log("brick has no possible moves")
+
+          if(playing === 1) {
+            brickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
+          }
+          else {
+            brickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
+          }
+
+          setTimeout(() => {
+            if(playing === 1) {
+              brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
+            }
+            else {
+              brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
+            }
+          },300)
+
           return
         }
         console.log(`team${playing} is moving ${currentBrick}`);
+        if(playing === 1) {
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
+        }
+        else {
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
+        }
         return
       }
 
       if(brickDiv.target.id === currentBrick) {
         currentBrick = undefined
+        currentBrickDiv = undefined
         console.log("cancelled move")
+        if(playing === 1) {
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
+        }
+        else {
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
+        }
         return
       }
       
@@ -244,6 +292,12 @@ function App() {
       }
 
       if(moveSuccess) {
+        if(playing === 1) {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
+        }
+        else {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#000"
+        }
         console.log("to",gotoBrick)
         for(let i in brickList[playing-1]) {
           if(brickList[playing-1][i] === currentBrick) {
@@ -279,6 +333,7 @@ function App() {
 
         newWall = wallCheck(brickDiv,newMap)
         currentBrick = undefined
+        currentBrickDiv = undefined
 
         if(!endgame) {
           let hasAPossibleMove = false
@@ -296,6 +351,41 @@ function App() {
       }
       else {
         console.log("cannot move there, try again")
+        if(playing === 1) {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
+        }
+        else {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
+        }
+
+        setTimeout(() => {
+          if(playing === 1) {
+            currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
+          }
+          else {
+            currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
+          }
+
+          setTimeout(() => {
+            if(playing === 1) {
+              currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
+            }
+            else {
+              currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
+            }
+
+            setTimeout(() => {
+              if(playing === 1) {
+                currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
+              }
+              else {
+                currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
+              }
+            },300)
+          },200)
+        },300)
+
+        
         return
       }
     }
