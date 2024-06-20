@@ -106,6 +106,12 @@ function wallCheck(brickDiv, map) {
   }
   if(foundNewWall) {
     console.log("wall formed, pick enemy brick to remove")
+    for(let wall of wallList[enemy-1]) {
+      for(let brick of wall) {
+        console.log(brick)
+        document.getElementById(brick).children[0].children[0].style.backgroundColor = "#808080"
+      }
+    }
   }
   return foundNewWall;
 }
@@ -166,6 +172,17 @@ function App() {
 
         updateMapSpot(brickDiv, 0);
         newWall = false;
+        for(let wall of wallList[enemy-1]) {
+          for(let brick of wall) {
+            
+            if(enemy === 1) {
+              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#fff"
+            }
+            else {
+              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#000"
+            }
+          }
+        }
         switchTurn();
         return;
       }
@@ -272,6 +289,48 @@ function App() {
         return
       }
       
+      if(currentBrick.split("-")[2] === brickDiv.target.id.split("-")[2]) {
+        let testMoves = possibleMovesGen(brickDiv.target.id)
+        if(testMoves.length === 0 && !endgame) {
+          console.log("brick has no possible moves")
+
+          if(playing === 1) {
+            brickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
+          }
+          else {
+            brickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
+          }
+
+          setTimeout(() => {
+            if(playing === 1) {
+              brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
+            }
+            else {
+              brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
+            }
+          },300)
+          return
+        }
+        console.log("changing move target")
+        if(playing === 1) {
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
+        }
+        else {
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
+        }
+
+        if(playing === 1) {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
+        }
+        else {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#000"
+        }
+        currentBrick = brickDiv.target.id
+        currentBrickDiv = brickDiv
+        possibleMoves = possibleMovesGen(currentBrick)
+        return
+      }
+
       if(brickDiv.target.id.split("-")[2] !== "0") {
         console.log("spot is not unoccupied, cannot move there")
         return
@@ -396,7 +455,6 @@ function App() {
     } else {
       for(let brick of wallList[playing-1][wallList[playing-1].length-1]) {
         if(document.getElementById(brick) === null) {
-          console.log(document.getElementById(`${brick.split("-")[0]}-${brick.split("-")[1]}-0`))
           document.getElementById(`${brick.split("-")[0]}-${brick.split("-")[1]}-0`).children[0].className = "walled"
         }
         else {
@@ -421,6 +479,16 @@ function App() {
       }
       if (clonedBrickList.length === 0) {
         console.log("all enemy bricks are in walls, switching turns");
+        for(let wall of wallList[enemy-1]) {
+          for(let brick of wall) {
+            if(enemy === 1) {
+              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#fff"
+            }
+            else {
+              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#000"
+            }
+          }
+        }
         switchTurn();
         newWall = false;
       }
