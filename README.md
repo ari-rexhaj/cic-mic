@@ -36,3 +36,6 @@ the first player to get the enemy players brick count to 2 wins. That is to say 
 - online multiplayer
 - quickmatch?
 - adjusting the map lines so they ACTUALLY line up
+
+## known bugs:
+- sometimes when moving a brick its inner color swaps (i have no idea why)

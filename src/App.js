@@ -585,21 +585,21 @@ function App() {
             }}
             >
             {layer.map((spot, index) => {
-
               return (
                 <div
                   style={{
-                    transition:"0.4s",
+                    transition:"0.2s",
                     position: "absolute",
                     zIndex: "100",
                     width: "60px",
                     height: "60px",
-                    backgroundColor: (reactPlaying === 1 ? "#000":"#fff"),
+                    backgroundColor: reactPlaying === 1 ? "#bfbfbf" : "#404040",
                     left: `calc(${spotSpots[index][0]} - 30px)`,
                     top: `calc(${spotSpots[index][1]} - 31px)`,
                     display:"flex",
                     justifyContent:"center",
                     alignItems:"center",
+                    borderRadius:"8px",
                   }}
                   onClick={(e) => {
                     gameMaster(e);
