@@ -35,3 +35,4 @@ the first player to get the enemy players brick count to 2 wins. That is to say 
 - VS bot
 - online multiplayer
 - quickmatch?
+- adjusting the map lines so they ACTUALLY line up

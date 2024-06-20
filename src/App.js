@@ -122,6 +122,7 @@ let currentBrick = undefined
 let gotoBrick = undefined
 
 function App() {
+  const [reactPlaying,setPlaying] = useState(playing)
   function gameMaster(brickDiv) {  //controls the game
     function switchTurn() {
       if (playing === 1) {
@@ -131,6 +132,7 @@ function App() {
         playing = 1;
         enemy = 2;
       }
+      setPlaying(playing)
     }
     if (newWall) {
       console.log(`team${playing} is removing`);
@@ -186,6 +188,8 @@ function App() {
         console.log("pregame over");
         if(!newWall) {
           switchTurn()
+        }
+        else {
         }
         return
       }
@@ -252,7 +256,24 @@ function App() {
         for(let i in wallList[playing-1]) {
           if(wallList[playing-1][i].includes(currentBrick)) {
             console.log("wall broken",wallList[playing-1][i])
-            wallList[playing-1].splice(i,1)
+
+            let brokenWall = wallList[playing-1].splice(i,1)
+            for(let brick of brokenWall[0]) {
+              let inOtherWall = false
+              for(let wall of wallList[playing-1]) {
+                if(wall.includes(brick)) {
+                  inOtherWall = true
+                  break
+                }
+              }
+
+              if(!inOtherWall) {
+                console.log("brokenWall:")
+                console.log("attempted:",brick)
+                console.log(document.getElementById(brick))
+                document.getElementById(brick).children[0].className = "brick"
+              }
+            }
           }
         }
 
@@ -283,6 +304,15 @@ function App() {
       //when turn ends, switch turn
       switchTurn();
     } else {
+      for(let brick of wallList[playing-1][wallList[playing-1].length-1]) {
+        if(document.getElementById(brick) === null) {
+          console.log(document.getElementById(`${brick.split("-")[0]}-${brick.split("-")[1]}-0`))
+          document.getElementById(`${brick.split("-")[0]}-${brick.split("-")[1]}-0`).children[0].className = "walled"
+        }
+        else {
+          document.getElementById(brick).children[0].className = "walled"
+        }
+      }
       //if all enemy bricks are in walls, move on to next turn without removing any bricks
       if (wallList[enemy - 1].length === 0) {
         return;
@@ -374,56 +404,69 @@ function App() {
   const [gameMap, setGameMap] = useState(generateMap(layerAmount));
   return (
     <div className="layersWrapper">
-      <div className="line1" />
-      <div className="line2" />
+      <div className="line1" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
+      <div className="line2" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
+      <div className="line3" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
+      <div className="line4" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
 
       {gameMap.map((layer, layerIndex) => {
         return (
           <div
-            style={{
+          style={{
+              transition:"0.2s",
               position: "absolute",
-              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 1px)`,
-              top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 1px)`,
+              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
+              top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
               width: `calc(${
                 100 - (100 / gameMap.length) * layerIndex
               }% - 10% - 1px)`,
               height: `calc(${
                 100 - (100 / gameMap.length) * layerIndex
               }% - 10% - 1px)`,
-              border: "2px solid #000",
-              backgroundColor: layerIndex === gameMap.length - 1 ? "#fff" : "",
+              border: `6px solid ${reactPlaying === 1 ? "#000":"#fff"}`,
             }}
-          >
+            >
             {layer.map((spot, index) => {
-              let state = "#000";
-              if (spot === 1) {
-                state = "#ff0000";
-              }
-              if (spot === 2) {
-                state = "#0000ff";
-              }
 
               return (
                 <div
                   style={{
+                    transition:"0.4s",
                     position: "absolute",
                     zIndex: "100",
-                    width: "20px",
-                    height: "20px",
-                    backgroundColor: state,
-                    left: `calc(${spotSpots[index][0]} - 10.5px)`,
-                    top: `calc(${spotSpots[index][1]} - 10px)`,
+                    width: "60px",
+                    height: "60px",
+                    backgroundColor: (reactPlaying === 1 ? "#000":"#fff"),
+                    left: `calc(${spotSpots[index][0]} - 30px)`,
+                    top: `calc(${spotSpots[index][1]} - 31px)`,
+                    display:"flex",
+                    justifyContent:"center",
+                    alignItems:"center",
                   }}
                   onClick={(e) => {
                     gameMaster(e);
                   }}
                   id={`${layerIndex}-${index}-${spot}`}
-                />
+                  >
+                    <div className="brick" style={{
+                      opacity:(spot === 0 ? "0":"1"),
+                      backgroundColor:(spot === 1 ? "#000":"#fff")
+                      
+                    }}>
+                      <div className="innerBrick" style={{
+                        backgroundColor:(spot === 2 ? "#000":"#fff")
+                      }}>
+
+                      </div>
+                    </div>
+                  </div>
+                  
               );
             })}
           </div>
         );
       })}
+      <div className="backgroundGradient" style={{left:(reactPlaying === 1 ? "0":"-200vw")}}/>
     </div>
   );
 }
