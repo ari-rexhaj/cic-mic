@@ -104,6 +104,9 @@ function wallCheck(brickDiv, map) {
       foundNewWall = true;
     }
   }
+  if(foundNewWall) {
+    console.log("wall formed, pick enemy brick to remove")
+  }
   return foundNewWall;
 }
 
@@ -137,7 +140,7 @@ function App() {
         brickDiv.target.id.split("-")[2] === playing.toString() ||
         brickDiv.target.id.split("-")[2] === "0"
       ) {
-        console.log("cannot remove your own brick");
+        console.log("can only remove enemy team bricks");
         return;
       } else {
         for (let wall of wallList[enemy - 1]) {
@@ -153,7 +156,7 @@ function App() {
             brickList[enemy - 1].splice(i, 1);
           }
         }
-        if(brickList[enemy-1].length < 3) {
+        if(brickList[enemy-1].length < 3 && gameState === 1) {
           gameState = 2
           console.log(`game over, team${playing} won the game`)
         }
@@ -202,8 +205,7 @@ function App() {
         }
         currentBrick = brickDiv.target.id
         possibleMoves = possibleMovesGen(currentBrick)
-        console.log(possibleMoves)
-        if(possibleMoves.length === 0) {
+        if(possibleMoves.length === 0 && !endgame) {
           currentBrick = undefined
           console.log("brick has no possible moves")
           return
@@ -289,7 +291,6 @@ function App() {
       for (let brick of brickList[enemy - 1]) {
         for (let wall of wallList[enemy - 1]) {
           if (wall.includes(brick)) {
-            console.log("brick:", brick, clonedBrickList);
             for (let i = 0; i < clonedBrickList.length; i++) {
               if (clonedBrickList[i] === brick) {
                 clonedBrickList.splice(i, 1);
@@ -298,7 +299,6 @@ function App() {
           }
         }
       }
-      console.log(clonedBrickList);
       if (clonedBrickList.length === 0) {
         console.log("all enemy bricks are in walls, switching turns");
         switchTurn();
@@ -327,7 +327,6 @@ function App() {
     let possibleMovements = []
     x1 = parseInt(x1)
     y1 = parseInt(y1)
-    console.log(gameMap)
     if(y1 % 2 === 1) {  //may be a bug here somewhere
       if(gameMap[layerMoveLoop[x1+2]][spotMoveLoop[y1+1]] === 0) {
         possibleMovements.push(`${layerMoveLoop[x1+2]}-${spotMoveLoop[y1+1]}-0`)
