@@ -352,10 +352,10 @@ function App() {
 
       if(moveSuccess) {
         if(playing === 1) {
-          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
         }
         else {
-          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#000"
+          brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
         }
         console.log("to",gotoBrick)
         for(let i in brickList[playing-1]) {
@@ -381,8 +381,6 @@ function App() {
               }
 
               if(!inOtherWall) {
-                console.log("brokenWall:")
-                console.log("attempted:",brick)
                 console.log(document.getElementById(brick))
                 document.getElementById(brick).children[0].className = "brick"
               }

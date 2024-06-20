@@ -27,9 +27,8 @@ the player with 3 bricks left, and can apply to both players if both only have 3
 the first player to get the enemy players brick count to 2 wins. That is to say if you only have 2 bricks left, you lose
 
 ### whats missing:
-- ✓ some kind of check for if a player has no available moves, as if not this will softlock the game
 - alot of testing for bugs
-- improved visuals
+- ✓ improved visuals
 - main menu screen
 - home screen/startup menu
 - VS bot
@@ -38,4 +37,4 @@ the first player to get the enemy players brick count to 2 wins. That is to say 
 - adjusting the map lines so they ACTUALLY line up
 
 ## known bugs:
-- sometimes when moving a brick its inner color swaps (i have no idea why)
+- sometimes when moving a brick its inner color swaps (maybe fixed but needs more testing)
