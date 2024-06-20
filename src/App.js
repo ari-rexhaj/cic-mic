@@ -120,6 +120,7 @@ let brickList = [[], []];
 
 let currentBrick = undefined
 let gotoBrick = undefined
+let possibleMoves = undefined
 
 function App() {
   function gameMaster(brickDiv) {
@@ -205,6 +206,13 @@ function App() {
           return
         }
         currentBrick = brickDiv.target.id
+        possibleMoves = possibleMovesGen(currentBrick)
+        console.log(possibleMoves)
+        if(possibleMoves.length === 0) {
+          currentBrick = undefined
+          console.log("brick has no possible moves")
+          return
+        }
         console.log(`team${playing} is moving ${currentBrick}`);
         return
       }
@@ -225,8 +233,9 @@ function App() {
       let newMap = undefined
 
       if(!endgame) {
-        moveSuccess = moveBrick(currentBrick,gotoBrick)[0]
-        newMap = moveBrick(currentBrick,gotoBrick)[1]
+        let moveResult = moveBrick(currentBrick,gotoBrick,possibleMoves) 
+        moveSuccess = moveResult[0]
+        newMap = moveResult[1]
       }
       else {
         moveSuccess = true
@@ -300,21 +309,37 @@ function App() {
     return newGameMap
   }
 
-  function moveBrick(current,goto) {
-    let [x1,y1,team] = current.split("-")
-    let [x2,y2] = goto.split("-")
+  function possibleMovesGen(current) {
+    let [x1,y1] = current.split("-")
+
     let layerMoveLoop = [1,0,1,2,1]
     let spotMoveLoop = [7,0,1,2,3,4,5,6,7,0]
 
     let possibleMovements = []
+    x1 = parseInt(x1)
+    y1 = parseInt(y1)
 
-    if(parseInt(y1) % 2 === 1) {
-      possibleMovements.push(`${layerMoveLoop[parseInt(x1)+2]}-${spotMoveLoop[parseInt(y1)+1]}-0`)
-      possibleMovements.push(`${layerMoveLoop[parseInt(x1)]}-${spotMoveLoop[parseInt(y1)+1]}-0`)
+    if(y1 % 2 === 1) {
+      if(gameMap[layerMoveLoop[x1+2]][spotMoveLoop[y1+1]] === 0) {
+        possibleMovements.push(`${layerMoveLoop[x1+2]}-${spotMoveLoop[y1+1]}-0`)
+      }
+      if(gameMap[layerMoveLoop[x1]][spotMoveLoop[y1+1]] === 0) {
+        possibleMovements.push(`${layerMoveLoop[x1]}-${spotMoveLoop[y1+1]}-0`)
+      }
     }
 
-    possibleMovements.push(`${layerMoveLoop[parseInt(x1)+1]}-${spotMoveLoop[parseInt(y1)+2]}-0`)
-    possibleMovements.push(`${layerMoveLoop[parseInt(x1)+1]}-${spotMoveLoop[parseInt(y1)]}-0`)
+    if(gameMap[layerMoveLoop[x1+1]][spotMoveLoop[y1+2]] === 0) {
+      possibleMovements.push(`${layerMoveLoop[x1+1]}-${spotMoveLoop[y1+2]}-0`)
+    }
+    if(gameMap[layerMoveLoop[x1+1]][spotMoveLoop[y1]] === 0) {
+      possibleMovements.push(`${layerMoveLoop[x1+1]}-${spotMoveLoop[y1]}-0`)
+    }
+    return possibleMovements
+  }
+
+  function moveBrick(current,goto,possibleMovements) {
+    let [x1,y1,team] = current.split("-")
+    let [x2,y2] = goto.split("-")
 
     if(possibleMovements.includes(goto)) {
       let newGameMap = [...gameMap]
