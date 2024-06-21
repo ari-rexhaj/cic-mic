@@ -10,7 +10,12 @@ const Home = () => {
   function handleButtonPress(index) {
     if (index === 0) {
       //open local menu
-      setLocal1(true);
+      if(local1 === true) {
+        setLocal1(false);
+      }
+      else {
+        setLocal1(true)
+      }
       sethowto(false);
     }
     if (index === 1) {
@@ -18,10 +23,15 @@ const Home = () => {
       setLocal2(true);
     }
     if (index === 2) {
+      if(howto === true) {
+        sethowto(false)
+      }
+      else {
+        sethowto(true);
+      }
       //opens multiplayer menu
       setLocal1(false);
       setLocal2(false);
-      sethowto(true);
     }
   }
 
