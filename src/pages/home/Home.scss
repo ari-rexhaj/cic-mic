@@ -1,0 +1,159 @@
+.homeWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100vw;
+    min-height: 100vh;
+    gap: 10px;
+
+    .homeTitle {
+        margin-top: 50px;
+        margin-bottom: 20px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        div {
+            pointer-events: none;
+            width: 100px;
+            height: 100px;
+            position: relative;
+            background-color: black;
+            clip-path: polygon(
+              50% 0%,
+              50% 0%,
+              50% 0%,
+              50% 0%,
+              100% 50%,
+              100% 50%,
+              100% 50%,
+              100% 50%,
+              50% 100%,
+              50% 100%,
+              50% 100%,
+              50% 100%,
+              0% 50%,
+              0% 50%,
+              0% 50%,
+              0% 50%
+            );
+          }
+          
+          .innerBrick {
+            pointer-events: none;
+            width: calc(100% - 16px);
+            height: calc(100% - 16px);
+            left: 8px;
+            top: 8px;
+            position: absolute;
+            background-color: white;
+            clip-path: polygon(
+              50% 0%,
+              50% 0%,
+              50% 0%,
+              50% 0%,
+              100% 50%,
+              100% 50%,
+              100% 50%,
+              100% 50%,
+              50% 100%,
+              50% 100%,
+              50% 100%,
+              50% 100%,
+              0% 50%,
+              0% 50%,
+              0% 50%,
+              0% 50%
+            );
+          }
+
+        h1 {
+            margin: 0;
+            font-size: 64px;
+            line-height: 32px;
+            span {
+                font-size: 32px;
+            }
+        }
+    }
+
+    .homeLocalWrapper {
+        position: relative;
+        .homeOptions {
+            button {
+                width: 100px;
+            }
+            .homeOptionsLine {
+                position: absolute;
+                left: -8px;
+                top: 19px;
+                width: 6px;
+                height: 2px;
+                background-color: black;
+            }
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        .opt1 {
+            top: 0;
+            left: calc(100% + 10px);
+        }
+        .opt2 {
+            top: 50px;
+            left: calc(100% + 10px);
+        }
+    }
+
+    button {
+        transition: 0.4s;
+        width: 300px;
+        height: 40px;
+        background-color: white;
+        border-radius: 6px;
+        border-style: solid;
+
+        &:hover {
+            cursor: pointer;
+            transition: 0.1s;
+            background-color: rgb(243, 243, 243);
+        }
+    }
+
+    .howTo {
+        display: flex;
+        transition: 0.2s;
+        flex-direction: column;
+        width: 50vw;
+        margin-bottom: 50px;
+        h1 {
+            text-align: center;
+            margin: 0;
+            margin-top: 30px;
+            font-size: 32px;
+        }
+        h2 {
+            margin: 0;
+            margin-top: 20px;
+            font-size: 24px;
+        }
+        h3 {
+            margin: 0;
+            margin-top: 15px;
+            font-size: 18px;
+        }
+        h4 {
+            margin: 0;
+            margin-top: 12px;
+            font-size: 16px;
+        }
+        p {
+            margin: 0;
+            margin-top: 8px;
+
+            span {
+                font-weight: 700;
+            }
+        }
+    }
+}

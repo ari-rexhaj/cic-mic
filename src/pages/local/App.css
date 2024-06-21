@@ -67,33 +67,6 @@
   );
 }
 
-.walled {
-  transform: rotate(22.5deg);
-  pointer-events: none;
-  transition: 0.5s;
-  width: 196%;
-  height: 196%;
-  position: absolute;
-  clip-path: polygon(
-    50% 1%,
-    63% 20%,
-    86% 15%,
-    81% 38%,
-    100% 50%,
-    81% 63%,
-    86% 86%,
-    63% 81%,
-    50% 100%,
-    37% 81%,
-    14% 86%,
-    19% 63%,
-    0% 50%,
-    19% 38%,
-    14% 15%,
-    37% 20%
-  );
-}
-
 .innerBrick {
   pointer-events: none;
   transition: 0.5s;
@@ -119,6 +92,33 @@
     0% 50%,
     0% 50%,
     0% 50%
+  );
+}
+
+.walled {
+  transform: rotate(22.5deg);
+  pointer-events: none;
+  transition: 0.5s;
+  width: 196%;
+  height: 196%;
+  position: absolute;
+  clip-path: polygon(
+    50% 1%,
+    63% 20%,
+    86% 15%,
+    81% 38%,
+    100% 50%,
+    81% 63%,
+    86% 86%,
+    63% 81%,
+    50% 100%,
+    37% 81%,
+    14% 86%,
+    19% 63%,
+    0% 50%,
+    19% 38%,
+    14% 15%,
+    37% 20%
   );
 }
 
@@ -153,7 +153,7 @@
   position: absolute;
   width: 33.33333333vw;
   left: 5%;
-
+  top: 45%;
   height: 6px;
 }
 .line2 {
@@ -171,15 +171,58 @@
   position: absolute;
   width: 33.33333333vw;
   right: 5%;
+  top: 45%;
   height: 6px;
 }
 .line4 {
   z-index: -2;
   pointer-events: none;
   position: absolute;
-  bottom: 5%;
+  bottom: 15%;
   height: 33.333333333vh;
   width: 6px;
+}
+
+.gameInfo {
+  position: absolute;
+  width: 98%;
+  height: 11vh;
+  padding: 0 1%;
+  bottom: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.teamInfo {
+  display: flex;
+  justify-content: space-between;
+  width: 50%;
+}
+
+.TeamText {
+  user-select: none;
+  margin: 0;
+  font-size: 3vh;
+  color: #000;
+  line-height: 4vh;
+}
+
+.TeamState {
+  user-select: none;
+}
+
+.black {
+  color: #fff;
+}
+
+.white {
+  text-align: end;
+}
+
+.TeamText span {
+  font-size: 7vh;
 }
 
 @keyframes line-border-in {
