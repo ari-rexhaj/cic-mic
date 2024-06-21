@@ -159,7 +159,6 @@ function App() {
         brickDiv.target.id.split("-")[2] === playing.toString() ||
         brickDiv.target.id.split("-")[2] === "0"
       ) {
-        console.log("can only remove enemy team bricks");
         handleStatusUpdate("can only remove enemy bricks!",playing)
         return;
       } else {
@@ -170,7 +169,6 @@ function App() {
           }
         }
         //if the player can remove brick, the next click event will turn brick to team 0 (unoccupied)
-        console.log("removing brick", brickDiv.target.id);
         for (let i = 0; i < brickList[enemy - 1].length; i++) {
           if (brickList[enemy - 1][i] === brickDiv.target.id) {
             brickList[enemy - 1].splice(i, 1);
@@ -421,7 +419,6 @@ function App() {
         }
       }
       else {
-        console.log("cannot move there, try again")
         handleStatusUpdate("can't move to that spot!",playing)
         if(playing === 1) {
           currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
@@ -491,7 +488,6 @@ function App() {
         }
       }
       if (clonedBrickList.length === 0) {
-        console.log("all enemy bricks are in walls, switching turns");
         handleStatusUpdate("No brick lost; all bricks walled",enemy)
         for(let wall of wallList[enemy-1]) {
           for(let brick of wall) {
