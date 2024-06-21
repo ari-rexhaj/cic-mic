@@ -123,6 +123,7 @@ let enemy = 2;  //what team is waiting for their turn
 let newWall = false;  //has a new wall been found?
 let brickList = [[], []]; //list of all bricks on board per team
 let possibleMoves = undefined
+let gameStart = false
 
 let currentBrick = undefined
 let currentBrickDiv = undefined
@@ -131,6 +132,7 @@ let gotoBrick = undefined
 function App() {
   const [reactPlaying,setPlaying] = useState(playing)
   function gameMaster(brickDiv) {  //controls the game
+    gameStart = true
     function switchTurn() {
       if (playing === 1) {
         playing = 2;
@@ -560,16 +562,27 @@ function App() {
   const [gameMap, setGameMap] = useState(generateMap(layerAmount));
   return (
     <div className="layersWrapper">
-      <div className="line1" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
-      <div className="line2" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
-      <div className="line3" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
-      <div className="line4" style={{backgroundColor:(reactPlaying === 1 ? "#000":"#fff")}}/>
+      <div className="line1" style={{
+        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
+        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.1s linear normal" : "line-border-out 0.3s linear normal") : "",
+        }}/>
+      <div className="line2" style={{
+        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
+        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.2s linear normal" : "line-border-out 0.2s linear normal") : "",
+        }}/>
+      <div className="line3" style={{
+        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
+        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.2s linear normal" : "line-border-out 0.2s linear normal") : "",
+        }}/>
+      <div className="line4" style={{
+        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
+        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.3s linear normal" : "line-border-out 0.1s linear normal") : "",
+        }}/>
 
       {gameMap.map((layer, layerIndex) => {
         return (
           <div
           style={{
-              transition:"0.2s",
               position: "absolute",
               left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
               top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
@@ -580,24 +593,26 @@ function App() {
                 100 - (100 / gameMap.length) * layerIndex
               }% - 10% - 1px)`,
               border: `6px solid ${reactPlaying === 1 ? "#000":"#fff"}`,
+              animation: gameStart ? (reactPlaying === 1 ? "layer-border-in 0.3s linear normal" : "layer-border-out 0.3s linear normal") : "",
             }}
             >
             {layer.map((spot, index) => {
               return (
                 <div
                   style={{
-                    transition:"0.2s",
                     position: "absolute",
                     zIndex: "100",
                     width: "60px",
                     height: "60px",
-                    backgroundColor: reactPlaying === 1 ? "#bfbfbf" : "#404040",
                     left: `calc(${spotSpots[index][0]} - 30px)`,
                     top: `calc(${spotSpots[index][1]} - 31px)`,
                     display:"flex",
                     justifyContent:"center",
                     alignItems:"center",
                     borderRadius:"8px",
+                    backgroundColor: reactPlaying === 1 ? "#bfbfbf" : "#404040",
+                    animation: gameStart ? (reactPlaying === 1 ? "spot-color-in 0.2s linear normal" : "spot-color-out 0.2s linear normal") : "",
+
                   }}
                   onClick={(e) => {
                     gameMaster(e);
@@ -622,7 +637,10 @@ function App() {
           </div>
         );
       })}
-      <div className="backgroundGradient" style={{left:(reactPlaying === 1 ? "0":"-200vw")}}/>
+      <div className="backgroundGradient" style={{
+        left:(reactPlaying === 1 ? "0":"-200vw"),
+        animation: gameStart ? (reactPlaying === 1 ? "gradient-in 0.4s linear normal" : "gradient-out 0.4s linear normal") : "",
+        }}/>
     </div>
   );
 }

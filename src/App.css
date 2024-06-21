@@ -1,135 +1,255 @@
 .layersWrapper {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow-x: hidden;
+  position: relative;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-x: hidden;
 }
 
 .backgroundGradient {
-    transition: 0.4s;
-    position: absolute;
-    z-index: -3;
-    top: 0;
-    width: 300vw;
-    height: 100vh;
-    background: rgb(255,255,255);
-    background: -moz-linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33.333333%, rgba(0,0,0,1) 66.6666666666666%, rgba(0,0,0,1) 100%);
-    background: -webkit-linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33.333333%, rgba(0,0,0,1) 66.6666666666666%, rgba(0,0,0,1) 100%);
-    background: linear-gradient(90deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33.333333%, rgba(0,0,0,1) 66.6666666666666%, rgba(0,0,0,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#000000",GradientType=1); 
+  position: absolute;
+  z-index: -3;
+  top: 0;
+  width: 300vw;
+  height: 100vh;
+  background: rgb(255, 255, 255);
+  background: -moz-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 33.333333%,
+    rgba(0, 0, 0, 1) 66.6666666666666%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  background: -webkit-linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 33.333333%,
+    rgba(0, 0, 0, 1) 66.6666666666666%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 1) 0%,
+    rgba(255, 255, 255, 1) 33.333333%,
+    rgba(0, 0, 0, 1) 66.6666666666666%,
+    rgba(0, 0, 0, 1) 100%
+  );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#000000",GradientType=1);
 }
 
 .brick {
-    pointer-events: none;
-    transition: 0.07s;
-    width: 150%;
-    height: 150%;
-    position: absolute;
-    clip-path: polygon(
-        50% 0%,
-        50% 0%,
-        50% 0%,
-        50% 0%,
-        100% 50%,
-        100% 50%,
-        100% 50%,
-        100% 50%,
-        50% 100%,
-        50% 100%,
-        50% 100%,
-        50% 100%,
-        0% 50%,
-        0% 50%,
-        0% 50%,
-        0% 50%
-     );
-    }
-    
-    .walled {
-        pointer-events: none;
-        transition: 0.5s;
-        width: 200%;
-        height: 200%;
-        position: absolute;
-  clip-path: polygon(50% 1%, 63% 20%, 86% 15%, 81% 38%, 100% 50%, 81% 63%, 86% 86%, 63% 81%, 50% 100%, 37% 81%, 14% 86%, 19% 63%, 0% 50%, 19% 38%, 14% 15%, 37% 20%);
+  pointer-events: none;
+  transition: 0.08s;
+  width: 150%;
+  height: 150%;
+  position: absolute;
+  clip-path: polygon(
+    50% 0%,
+    50% 0%,
+    50% 0%,
+    50% 0%,
+    100% 50%,
+    100% 50%,
+    100% 50%,
+    100% 50%,
+    50% 100%,
+    50% 100%,
+    50% 100%,
+    50% 100%,
+    0% 50%,
+    0% 50%,
+    0% 50%,
+    0% 50%
+  );
+}
+
+.walled {
+  transform: rotate(22.5deg);
+  pointer-events: none;
+  transition: 0.5s;
+  width: 196%;
+  height: 196%;
+  position: absolute;
+  clip-path: polygon(
+    50% 1%,
+    63% 20%,
+    86% 15%,
+    81% 38%,
+    100% 50%,
+    81% 63%,
+    86% 86%,
+    63% 81%,
+    50% 100%,
+    37% 81%,
+    14% 86%,
+    19% 63%,
+    0% 50%,
+    19% 38%,
+    14% 15%,
+    37% 20%
+  );
 }
 
 .innerBrick {
-    pointer-events: none;
-    transition: 0.5s;
-    width: calc(100% - 10px);
-    height: calc(100% - 10px);
-    left: 5px;
-    top: 5px;
-    position: absolute;
-    clip-path: polygon(
-        50% 0%,
-        50% 0%,
-        50% 0%,
-        50% 0%,
-        100% 50%,
-        100% 50%,
-        100% 50%,
-        100% 50%,
-        50% 100%,
-        50% 100%,
-        50% 100%,
-        50% 100%,
-        0% 50%,
-        0% 50%,
-        0% 50%,
-        0% 50%
-     );
- }
+  pointer-events: none;
+  transition: 0.5s;
+  width: calc(100% - 16px);
+  height: calc(100% - 16px);
+  left: 8px;
+  top: 8px;
+  position: absolute;
+  clip-path: polygon(
+    50% 0%,
+    50% 0%,
+    50% 0%,
+    50% 0%,
+    100% 50%,
+    100% 50%,
+    100% 50%,
+    100% 50%,
+    50% 100%,
+    50% 100%,
+    50% 100%,
+    50% 100%,
+    0% 50%,
+    0% 50%,
+    0% 50%,
+    0% 50%
+  );
+}
 
 .walled div {
-    width: calc(100% - 20px);
-    height: calc(100% - 20px);
-    left: 10px;
-    top: 10px;
-  clip-path: polygon(50% 1%, 63% 20%, 86% 15%, 81% 38%, 100% 50%, 81% 63%, 86% 86%, 63% 81%, 50% 100%, 37% 81%, 14% 86%, 19% 63%, 0% 50%, 19% 38%, 14% 15%, 37% 20%);
+  width: calc(100% - 20px);
+  height: calc(100% - 20px);
+  left: 10px;
+  top: 10px;
+  clip-path: polygon(
+    50% 1%,
+    63% 20%,
+    86% 15%,
+    81% 38%,
+    100% 50%,
+    81% 63%,
+    86% 86%,
+    63% 81%,
+    50% 100%,
+    37% 81%,
+    14% 86%,
+    19% 63%,
+    0% 50%,
+    19% 38%,
+    14% 15%,
+    37% 20%
+  );
 }
 
 .line1 {
-    transition: 0.2s;
-    z-index: -2;
-    pointer-events: none;
-    position: absolute;
-    width: 33.33333333vw;
-    left: 5%;
+  z-index: -2;
+  pointer-events: none;
+  position: absolute;
+  width: 33.33333333vw;
+  left: 5%;
 
-    height: 6px;
+  height: 6px;
 }
 .line2 {
-    transition: 0.2s;
-    z-index: -2;
-    pointer-events: none;
-    position: absolute;
-    top: 5%;
-    height: 33.333333333vh;
-    width: 6px;
+  z-index: -2;
+  pointer-events: none;
+  position: absolute;
+  top: 5%;
+  height: 33.333333333vh;
+  width: 6px;
 }
 
 .line3 {
-    transition: 0.2s;
-    z-index: -2;
-    pointer-events: none;
-    position: absolute;
-    width: 33.33333333vw;
-    right: 5%;
-    height: 6px;
+  z-index: -2;
+  pointer-events: none;
+  position: absolute;
+  width: 33.33333333vw;
+  right: 5%;
+  height: 6px;
 }
 .line4 {
-    transition: 0.2s;
-    z-index: -2;
-    pointer-events: none;
-    position: absolute;
-    bottom: 5%;
-    height: 33.333333333vh;
-    width: 6px;
+  z-index: -2;
+  pointer-events: none;
+  position: absolute;
+  bottom: 5%;
+  height: 33.333333333vh;
+  width: 6px;
+}
+
+@keyframes line-border-in {
+  0% {
+    background-color: #fff;
+  }
+  100% {
+    background-color: #000;
+  }
+}
+
+@keyframes line-border-out {
+  0% {
+    background-color: #000;
+  }
+  100% {
+    background-color: #fff;
+  }
+}
+
+@keyframes gradient-in {
+  0% {
+    left: -200vw;
+  }
+  100% {
+    left: 0;
+  }
+}
+
+@keyframes gradient-out {
+  0% {
+    left: 0;
+  }
+  100% {
+    left: -200vw;
+  }
+}
+
+@keyframes layer-border-in {
+  0% {
+    border-color: #fff;
+  }
+  100% {
+    border-color: #000;
+  }
+}
+
+@keyframes layer-border-out {
+  0% {
+    border-color: #000;
+  }
+  100% {
+    border-color: #fff;
+  }
+}
+
+@keyframes spot-color-in {
+  0% {
+    background-color: #404040;
+  }
+  100% {
+    background-color: #bfbfbf;
+  }
+}
+
+@keyframes spot-color-out {
+  0% {
+    background-color: #bfbfbf;
+  }
+  100% {
+    background-color: #404040;
+  }
 }
