@@ -10,11 +10,10 @@ const Home = () => {
   function handleButtonPress(index) {
     if (index === 0) {
       //open local menu
-      if(local1 === true) {
+      if (local1 === true) {
         setLocal1(false);
-      }
-      else {
-        setLocal1(true)
+      } else {
+        setLocal1(true);
       }
       sethowto(false);
     }
@@ -23,10 +22,9 @@ const Home = () => {
       setLocal2(true);
     }
     if (index === 2) {
-      if(howto === true) {
-        sethowto(false)
-      }
-      else {
+      if (howto === true) {
+        sethowto(false);
+      } else {
         sethowto(true);
       }
       //opens multiplayer menu
@@ -125,43 +123,105 @@ const Home = () => {
           unoccupied spot
         </p>
         <p>
-          <strong>5.</strong> if you've formed a wall, but all enemy bricks are walled. The game will proceed without removing a brick from the enemy
+          <strong>5.</strong> if you've formed a wall, but all enemy bricks are
+          walled. The game will proceed without removing a brick from the enemy
         </p>
-        
+
         <h2>gameplay:</h2>
-        <p>the gameplay consist of 3 phrases and <span>all the general rules apply to all phases</span></p>
+        <p>
+          the gameplay consist of 3 phrases and{" "}
+          <span>all the general rules apply to all phases</span>
+        </p>
         <h3>pregame:</h3>
-        <p>players take turn placing one of their 9 total reserve bricks onto the board</p>
+        <p>
+          players take turn placing one of their 9 total reserve bricks onto the
+          board
+        </p>
         <p> once 18 bricks total are on the board, the midgame phase begins</p>
         <h3>midgame:</h3>
-        <p>players must now choose a brick to move and may only move it to a connected spot on the map (only moved to where the paths lead)</p>
-        <p> a brick can only be moved one spot at a time, and moving a brick takes a turn.</p>
-        <p>For players in the midgame phase, a new rule applies:<br/><strong>6.</strong> if all your bricks have no possible moves, your turn is skipped</p>
+        <p>
+          players must now choose a brick to move and may only move it to a
+          connected spot on the map (only moved to where the paths lead)
+        </p>
+        <p>
+          {" "}
+          a brick can only be moved one spot at a time, and moving a brick takes
+          a turn.
+        </p>
+        <p>
+          For players in the midgame phase, a new rule applies:
+          <br />
+          <strong>6.</strong> if all your bricks have no possible moves, your
+          turn is skipped
+        </p>
         <h3>endgame:</h3>
-        <p>a player who has only 3 bricks left on the board will enter the endgame phase</p> 
-        <p>they can move their bricks anywhere that is unoccupied on the map, this only applies to the player with 3 bricks left</p>
+        <p>
+          a player who has only 3 bricks left on the board will enter the
+          endgame phase
+        </p>
+        <p>
+          they can move their bricks anywhere that is unoccupied on the map,
+          this only applies to the player with 3 bricks left
+        </p>
         <p>both players can be in the endgame phase at the same time</p>
         <h3>win condition:</h3>
-        <p>to win the game you must get your <span>enemies</span> bricks on the board to less than 3</p>
-        <p>that is to say, if you only have 2 bricks left on the board, you've lost the game</p>
-        
+        <p>
+          to win the game you must get your <span>enemies</span> bricks on the
+          board to less than 3
+        </p>
+        <p>
+          that is to say, if you only have 2 bricks left on the board, you've
+          lost the game
+        </p>
+
         <h2>visual guidance and controls:</h2>
-        <p>this section explains how to understand the state of the game from the visuals and to explain the controls.</p>
-        <p>the games only method of controls is clicking/tapping bricks, this is to support mobile with minimal work, allow for easy and intutive controls and also to make the programming simpler. Dragging may be added into the game at a later time</p>
+        <p>
+          this section explains how to understand the state of the game from the
+          visuals and to explain the controls.
+        </p>
+        <p>
+          the games only method of controls is clicking/tapping bricks, this is
+          to support mobile with minimal work, allow for easy and intutive
+          controls and also to make the programming simpler. Dragging may be
+          added into the game at a later time
+        </p>
         <h3>background color:</h3>
-        <p>the background will shift from white and black as you take turns. If the background is white, that means that its team white's turn to play, and if its black, that means its team black's turn to play</p>
+        <p>
+          the background will shift from white and black as you take turns. If
+          the background is white, that means that its team white's turn to
+          play, and if its black, that means its team black's turn to play
+        </p>
         <h3>selecting a brick to move:</h3>
-        <p>in the midgame phase, you will have to move bricks around the map. To select the brick you'd like to move, simply click a brick on your team. The bricks inner color will tell you if you are able to move it. </p>
+        <p>
+          in the midgame phase, you will have to move bricks around the map. To
+          select the brick you'd like to move, simply click a brick on your
+          team. The bricks inner color will tell you if you are able to move it.{" "}
+        </p>
         <h4>brick blinked red:</h4>
-        <p>if the bricks inner color blinked red, that means that the brick has no possible moves, and you need to select another brick</p>
+        <p>
+          if the bricks inner color blinked red, that means that the brick has
+          no possible moves, and you need to select another brick
+        </p>
         <h4>brick turns yellow:</h4>
-        <p>if the bricks inner color turns yellow, that means that it is possible to move the brick. Simply click a neighboring spot that is unoccupied to move it to that spot</p>
+        <p>
+          if the bricks inner color turns yellow, that means that it is possible
+          to move the brick. Simply click a neighboring spot that is unoccupied
+          to move it to that spot
+        </p>
         <h4>brick turns yellow, but blinked red twice:</h4>
-        <p>this only happens in the midgame phase and if you've selected a brick that has atleast one possible move, but the spot you tried to move it to was not one of them. Remember to only select a <span>neighboring spot</span>  that is unoccupied</p>
+        <p>
+          this only happens in the midgame phase and if you've selected a brick
+          that has atleast one possible move, but the spot you tried to move it
+          to was not one of them. Remember to only select a{" "}
+          <span>neighboring spot</span> that is unoccupied
+        </p>
         <h4>enemies walled bricks turns grey:</h4>
-        <p>this happens when you've formed a wall, and it helps you see which bricks cannot be removed. As stated in <span>rule 2</span></p>
-      
-      <h1>thank you for playing!</h1>
+        <p>
+          this happens when you've formed a wall, and it helps you see which
+          bricks cannot be removed. As stated in <span>rule 2</span>
+        </p>
+
+        <h1>thank you for playing!</h1>
       </div>
     </div>
   );

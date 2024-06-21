@@ -104,10 +104,12 @@ function wallCheck(brickDiv, map) {
       foundNewWall = true;
     }
   }
-  if(foundNewWall) {
-    for(let wall of wallList[enemy-1]) {
-      for(let brick of wall) {
-        document.getElementById(brick).children[0].children[0].style.backgroundColor = "#808080"
+  if (foundNewWall) {
+    for (let wall of wallList[enemy - 1]) {
+      for (let brick of wall) {
+        document.getElementById(
+          brick
+        ).children[0].children[0].style.backgroundColor = "#808080";
       }
     }
   }
@@ -117,31 +119,32 @@ function wallCheck(brickDiv, map) {
 let gameState = 0; //0 is pregame, 1 is midgame, 2 is game over
 let preGameRounds = 9 * 2; //amount of turns before the pregame is finished/amount of bricks per team can place before pregame is over
 let playing = 1; //what team is playing 1 = team1 and 2 = team2, 0 is used to represent empty space so we do not use that value for this variable
-let enemy = 2;  //what team is waiting for their turn
-let newWall = false;  //has a new wall been found?
+let enemy = 2; //what team is waiting for their turn
+let newWall = false; //has a new wall been found?
 let brickList = [[], []]; //list of all bricks on board per team
-let possibleMoves = undefined
-let gameStart = false
+let possibleMoves = undefined;
+let gameStart = false;
 
-let currentBrick = undefined
-let currentBrickDiv = undefined
-let gotoBrick = undefined
+let currentBrick = undefined;
+let currentBrickDiv = undefined;
+let gotoBrick = undefined;
 
 function App() {
-  const [reactPlaying,setPlaying] = useState(playing)
-  const [reactGameState,setGameState] = useState(gameState)
-  const [status1,setStatus1] = useState("Making the first move!")
-  const [status2,setStatus2] = useState("Making the first move!")
-  function handleStatusUpdate(value,team) {
-    if(team === 1) {
-      setStatus1(value)
+  const [reactPlaying, setPlaying] = useState(playing);
+  const [reactGameState, setGameState] = useState(gameState);
+  const [status1, setStatus1] = useState("Making the first move!");
+  const [status2, setStatus2] = useState("thy trespass has not gone unseen...");
+  function handleStatusUpdate(value, team) {
+    if (team === 1) {
+      setStatus1(value);
     }
-    if(team === 2) {
-      setStatus2(value)
+    if (team === 2) {
+      setStatus2(value);
     }
   }
-  function gameMaster(brickDiv) {  //controls the game
-    gameStart = true
+  function gameMaster(brickDiv) {
+    //controls the game
+    gameStart = true;
     function switchTurn() {
       if (playing === 1) {
         playing = 2;
@@ -150,7 +153,7 @@ function App() {
         playing = 1;
         enemy = 2;
       }
-      setPlaying(playing)
+      setPlaying(playing);
     }
     if (newWall) {
       //if a new wall is found:
@@ -159,12 +162,12 @@ function App() {
         brickDiv.target.id.split("-")[2] === playing.toString() ||
         brickDiv.target.id.split("-")[2] === "0"
       ) {
-        handleStatusUpdate("can only remove enemy bricks!",playing)
+        handleStatusUpdate("can only remove enemy bricks!", playing);
         return;
       } else {
         for (let wall of wallList[enemy - 1]) {
           if (wall.includes(brickDiv.target.id)) {
-            handleStatusUpdate("can't remove walled brick!",playing)
+            handleStatusUpdate("can't remove walled brick!", playing);
             return;
           }
         }
@@ -174,22 +177,24 @@ function App() {
             brickList[enemy - 1].splice(i, 1);
           }
         }
-        if(brickList[enemy-1].length < 3 && gameState === 1) {
-          gameState = 2
-          setGameState(2)
-          handleStatusUpdate("You won!",playing)
+        if (brickList[enemy - 1].length < 3 && gameState === 1) {
+          gameState = 2;
+          setGameState(2);
+          handleStatusUpdate("You won!", playing);
         }
 
         updateMapSpot(brickDiv, 0);
         newWall = false;
-        for(let wall of wallList[enemy-1]) {
-          for(let brick of wall) {
-            
-            if(enemy === 1) {
-              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#fff"
-            }
-            else {
-              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#000"
+        for (let wall of wallList[enemy - 1]) {
+          for (let brick of wall) {
+            if (enemy === 1) {
+              document.getElementById(
+                brick
+              ).children[0].children[0].style.backgroundColor = "#fff";
+            } else {
+              document.getElementById(
+                brick
+              ).children[0].children[0].style.backgroundColor = "#000";
             }
           }
         }
@@ -198,10 +203,256 @@ function App() {
       }
     }
 
+    if (gameState === 1) {
+      //midgame
+      handleStatusUpdate("moving a brick", enemy);
+      let endgame = false;
+      //endgame
+      if (brickList[playing - 1].length < 4) {
+        endgame = true;
+      }
+
+      if (currentBrick === undefined) {
+        if (brickDiv.target.id.split("-")[2] !== playing.toString()) {
+          handleStatusUpdate("Can only select own team's brick!", playing);
+          if (enemy === 1) {
+            brickDiv.target.children[0].children[0].style.backgroundColor =
+              "#ff4747";
+          } else {
+            brickDiv.target.children[0].children[0].style.backgroundColor =
+              "#8b0000";
+          }
+
+          setTimeout(() => {
+            if (enemy === 1) {
+              brickDiv.target.children[0].children[0].style.backgroundColor =
+                "#fff";
+            } else {
+              brickDiv.target.children[0].children[0].style.backgroundColor =
+                "#000";
+            }
+          }, 300);
+          return;
+        }
+        currentBrick = brickDiv.target.id;
+        currentBrickDiv = brickDiv;
+        possibleMoves = possibleMovesGen(currentBrick);
+        if (possibleMoves.length === 0 && !endgame) {
+          currentBrick = undefined;
+          currentBrickDiv = undefined;
+          handleStatusUpdate("brick can't move!", playing);
+
+          if (playing === 1) {
+            brickDiv.target.children[0].children[0].style.backgroundColor =
+              "#ff4747";
+          } else {
+            brickDiv.target.children[0].children[0].style.backgroundColor =
+              "#8b0000";
+          }
+
+          setTimeout(() => {
+            if (playing === 1) {
+              brickDiv.target.children[0].children[0].style.backgroundColor =
+                "#fff";
+            } else {
+              brickDiv.target.children[0].children[0].style.backgroundColor =
+                "#000";
+            }
+          }, 300);
+
+          return;
+        }
+        handleStatusUpdate("selected a brick", playing);
+        if (playing === 1) {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#fffcb3";
+        } else {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#7a7a48";
+        }
+        return;
+      }
+
+      if (brickDiv.target.id === currentBrick) {
+        currentBrick = undefined;
+        currentBrickDiv = undefined;
+        handleStatusUpdate("cancelled selection", playing);
+        if (playing === 1) {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#fff";
+        } else {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#000";
+        }
+        return;
+      }
+
+      if (currentBrick.split("-")[2] === brickDiv.target.id.split("-")[2]) {
+        let testMoves = possibleMovesGen(brickDiv.target.id);
+        if (testMoves.length === 0 && !endgame) {
+          handleStatusUpdate("brick can't move!", playing);
+
+          if (playing === 1) {
+            brickDiv.target.children[0].children[0].style.backgroundColor =
+              "#ff4747";
+          } else {
+            brickDiv.target.children[0].children[0].style.backgroundColor =
+              "#8b0000";
+          }
+
+          setTimeout(() => {
+            if (playing === 1) {
+              brickDiv.target.children[0].children[0].style.backgroundColor =
+                "#fff";
+            } else {
+              brickDiv.target.children[0].children[0].style.backgroundColor =
+                "#000";
+            }
+          }, 300);
+          return;
+        }
+        handleStatusUpdate("switched brick selection", playing);
+        if (playing === 1) {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#fffcb3";
+        } else {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#7a7a48";
+        }
+
+        if (playing === 1) {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+            "#fff";
+        } else {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+            "#000";
+        }
+        currentBrick = brickDiv.target.id;
+        currentBrickDiv = brickDiv;
+        possibleMoves = possibleMovesGen(currentBrick);
+        return;
+      }
+
+      //legacy code that can probably be removed
+      if (brickDiv.target.id.split("-")[2] !== "0") {
+        handleStatusUpdate("spot is occupied!", playing);
+        return;
+      }
+
+      gotoBrick = brickDiv.target.id;
+      let moveSuccess = false;
+      let newMap = undefined;
+
+      if (!endgame) {
+        let moveResult = moveBrick(currentBrick, gotoBrick, possibleMoves);
+        moveSuccess = moveResult[0];
+        newMap = moveResult[1];
+      } else {
+        moveSuccess = true;
+        newMap = endgameMoveBrick(currentBrick, gotoBrick);
+      }
+
+      if (moveSuccess) {
+        if (playing === 1) {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#fff";
+        } else {
+          brickDiv.target.children[0].children[0].style.backgroundColor =
+            "#000";
+        }
+        for (let i in brickList[playing - 1]) {
+          if (brickList[playing - 1][i] === currentBrick) {
+            brickList[playing - 1].splice(i, 1);
+            brickList[playing - 1].push(
+              `${gotoBrick.split("-")[0]}-${gotoBrick.split("-")[1]}-${playing}`
+            );
+          }
+        }
+
+        for (let i in wallList[playing - 1]) {
+          if (wallList[playing - 1][i].includes(currentBrick)) {
+            let brokenWall = wallList[playing - 1].splice(i, 1);
+            for (let brick of brokenWall[0]) {
+              let inOtherWall = false;
+              for (let wall of wallList[playing - 1]) {
+                if (wall.includes(brick)) {
+                  inOtherWall = true;
+                  break;
+                }
+              }
+
+              if (!inOtherWall) {
+                document.getElementById(brick).children[0].className = "brick";
+              }
+            }
+          }
+        }
+
+        newWall = wallCheck(brickDiv, newMap);
+        currentBrick = undefined;
+        currentBrickDiv = undefined;
+
+        if (!endgame) {
+          let hasAPossibleMove = false;
+          for (let brick of brickList[enemy - 1]) {
+            if (possibleMovesGen(brick).length !== 0) {
+              hasAPossibleMove = true;
+              break;
+            }
+          }
+          if (!hasAPossibleMove) {
+            handleStatusUpdate("Enemy has no moves, playing again", playing);
+            return;
+          }
+        }
+      } else {
+        handleStatusUpdate("can't move to that spot!", playing);
+        if (playing === 1) {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+            "#ff4747";
+        } else {
+          currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+            "#8b0000";
+        }
+
+        setTimeout(() => {
+          if (playing === 1) {
+            currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+              "#fffcb3";
+          } else {
+            currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+              "#7a7a48";
+          }
+
+          setTimeout(() => {
+            if (playing === 1) {
+              currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+                "#ff4747";
+            } else {
+              currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+                "#8b0000";
+            }
+
+            setTimeout(() => {
+              if (playing === 1) {
+                currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+                  "#fffcb3";
+              } else {
+                currentBrickDiv.target.children[0].children[0].style.backgroundColor =
+                  "#7a7a48";
+              }
+            }, 300);
+          }, 200);
+        }, 300);
+
+        return;
+      }
+    }
+
     if (gameState === 0) {
       //pregame
       if (brickDiv.target.id.split("-")[2] !== "0") {
-        handleStatusUpdate("Spot is occupied!",playing)
+        handleStatusUpdate("Spot is occupied!", playing);
         return;
       }
       let newMap = updateMapSpot(brickDiv, playing);
@@ -209,266 +460,38 @@ function App() {
       brickList[playing - 1].push(`${layer}-${spot}-${playing}`);
       newWall = wallCheck(brickDiv, newMap);
       preGameRounds -= 1;
-      if(newWall) {
-        handleStatusUpdate("removing a brick",playing)
+      if (newWall) {
+        handleStatusUpdate("removing a brick", playing);
       }
       if (preGameRounds === 0) {
         //when all 18 moves have been made switch to midgame
         gameState = 1;
-        handleStatusUpdate("moving a brick",enemy)
-        setGameState(1)
-        if(!newWall) {
-          switchTurn()
+        handleStatusUpdate("moving a brick", enemy);
+        setGameState(1);
+        if (!newWall) {
+          switchTurn();
         }
-        return
-      }
-      else {
-        handleStatusUpdate("placing a brick",enemy)
-      }
-    }
-    
-    if(gameState === 1) { //midgame
-      handleStatusUpdate("moving a brick",enemy)
-      let endgame = false
-      //endgame
-      if(brickList[playing-1].length < 4) {
-        endgame = true
-      }
-
-      if(currentBrick === undefined) {
-        if(brickDiv.target.id.split("-")[2] !== playing.toString()) {
-          handleStatusUpdate("Can only select own team's brick!",playing)
-          if(enemy === 1) {
-            brickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
-          }
-          else {
-            brickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
-          }
-
-          setTimeout(() => {
-            if(enemy === 1) {
-              brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
-            }
-            else {
-              brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
-            }
-          },300)
-          return
-        }
-        currentBrick = brickDiv.target.id
-        currentBrickDiv = brickDiv
-        possibleMoves = possibleMovesGen(currentBrick)
-        if(possibleMoves.length === 0 && !endgame) {
-          currentBrick = undefined
-          currentBrickDiv = undefined
-          handleStatusUpdate("brick can't move!",playing)
-
-          if(playing === 1) {
-            brickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
-          }
-          else {
-            brickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
-          }
-
-          setTimeout(() => {
-            if(playing === 1) {
-              brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
-            }
-            else {
-              brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
-            }
-          },300)
-
-          return
-        }
-        handleStatusUpdate("selected a brick",playing)
-        if(playing === 1) {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
-        }
-        else {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
-        }
-        return
-      }
-
-      if(brickDiv.target.id === currentBrick) {
-        currentBrick = undefined
-        currentBrickDiv = undefined
-        handleStatusUpdate("cancelled selection",playing)
-        if(playing === 1) {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
-        }
-        else {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
-        }
-        return
-      }
-      
-      if(currentBrick.split("-")[2] === brickDiv.target.id.split("-")[2]) {
-        let testMoves = possibleMovesGen(brickDiv.target.id)
-        if(testMoves.length === 0 && !endgame) {
-          handleStatusUpdate("brick can't move!",playing)
-
-          if(playing === 1) {
-            brickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
-          }
-          else {
-            brickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
-          }
-
-          setTimeout(() => {
-            if(playing === 1) {
-              brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
-            }
-            else {
-              brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
-            }
-          },300)
-          return
-        }
-        handleStatusUpdate("switched brick selection",playing)
-        if(playing === 1) {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
-        }
-        else {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
-        }
-
-        if(playing === 1) {
-          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
-        }
-        else {
-          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#000"
-        }
-        currentBrick = brickDiv.target.id
-        currentBrickDiv = brickDiv
-        possibleMoves = possibleMovesGen(currentBrick)
-        return
-      }
-
-      //legacy code that can probably be removed
-      if(brickDiv.target.id.split("-")[2] !== "0") {
-        handleStatusUpdate("spot is occupied!",playing)
-        return
-      }
-
-      gotoBrick = brickDiv.target.id
-      let moveSuccess = false
-      let newMap = undefined
-
-      if(!endgame) {
-        let moveResult = moveBrick(currentBrick,gotoBrick,possibleMoves) 
-        moveSuccess = moveResult[0]
-        newMap = moveResult[1]
-      }
-      else {
-        moveSuccess = true
-        newMap = endgameMoveBrick(currentBrick,gotoBrick)
-      }
-
-      if(moveSuccess) {
-        if(playing === 1) {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#fff"
-        }
-        else {
-          brickDiv.target.children[0].children[0].style.backgroundColor = "#000"
-        }
-        for(let i in brickList[playing-1]) {
-          if(brickList[playing-1][i] === currentBrick) {
-            brickList[playing-1].splice(i,1)
-            brickList[playing-1].push(`${gotoBrick.split("-")[0]}-${gotoBrick.split("-")[1]}-${playing}`)
-          }
-        }
-
-
-        for(let i in wallList[playing-1]) {
-          if(wallList[playing-1][i].includes(currentBrick)) {
-            let brokenWall = wallList[playing-1].splice(i,1)
-            for(let brick of brokenWall[0]) {
-              let inOtherWall = false
-              for(let wall of wallList[playing-1]) {
-                if(wall.includes(brick)) {
-                  inOtherWall = true
-                  break
-                }
-              }
-
-              if(!inOtherWall) {
-                document.getElementById(brick).children[0].className = "brick"
-              }
-            }
-          }
-        }
-
-        newWall = wallCheck(brickDiv,newMap)
-        currentBrick = undefined
-        currentBrickDiv = undefined
-
-        if(!endgame) {
-          let hasAPossibleMove = false
-          for (let brick of brickList[enemy-1]) {
-            if(possibleMovesGen(brick).length !== 0) {
-              hasAPossibleMove = true
-              break
-            }
-          }
-          if(!hasAPossibleMove) {
-            handleStatusUpdate("Enemy has no moves, playing again",playing)
-            return
-          }
-        }
-      }
-      else {
-        handleStatusUpdate("can't move to that spot!",playing)
-        if(playing === 1) {
-          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
-        }
-        else {
-          currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
-        }
-
-        setTimeout(() => {
-          if(playing === 1) {
-            currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
-          }
-          else {
-            currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
-          }
-
-          setTimeout(() => {
-            if(playing === 1) {
-              currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#ff4747"
-            }
-            else {
-              currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#8b0000"
-            }
-
-            setTimeout(() => {
-              if(playing === 1) {
-                currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#fffcb3"
-              }
-              else {
-                currentBrickDiv.target.children[0].children[0].style.backgroundColor = "#7a7a48"
-              }
-            },300)
-          },200)
-        },300)
-
-        
-        return
+      } else {
+        handleStatusUpdate("placing a brick", enemy);
       }
     }
 
     if (!newWall) {
+      if(gameState === 2) {
+        return
+      }
       //when turn ends, switch turn
       switchTurn();
     } else {
-      for(let brick of wallList[playing-1][wallList[playing-1].length-1]) {
-        if(document.getElementById(brick) === null) {
-          document.getElementById(`${brick.split("-")[0]}-${brick.split("-")[1]}-0`).children[0].className = "walled"
-        }
-        else {
-          document.getElementById(brick).children[0].className = "walled"
+      for (let brick of wallList[playing - 1][
+        wallList[playing - 1].length - 1
+      ]) {
+        if (document.getElementById(brick) === null) {
+          document.getElementById(
+            `${brick.split("-")[0]}-${brick.split("-")[1]}-0`
+          ).children[0].className = "walled";
+        } else {
+          document.getElementById(brick).children[0].className = "walled";
         }
       }
       //if all enemy bricks are in walls, move on to next turn without removing any bricks
@@ -488,14 +511,17 @@ function App() {
         }
       }
       if (clonedBrickList.length === 0) {
-        handleStatusUpdate("No brick lost; all bricks walled",enemy)
-        for(let wall of wallList[enemy-1]) {
-          for(let brick of wall) {
-            if(enemy === 1) {
-              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#fff"
-            }
-            else {
-              document.getElementById(brick).children[0].children[0].style.backgroundColor = "#000"
+        handleStatusUpdate("No brick lost; all bricks walled", enemy);
+        for (let wall of wallList[enemy - 1]) {
+          for (let brick of wall) {
+            if (enemy === 1) {
+              document.getElementById(
+                brick
+              ).children[0].children[0].style.backgroundColor = "#fff";
+            } else {
+              document.getElementById(
+                brick
+              ).children[0].children[0].style.backgroundColor = "#000";
             }
           }
         }
@@ -505,57 +531,63 @@ function App() {
     }
   }
 
-  function endgameMoveBrick(current,goto) {
-    let [x1,y1,team] = current.split("-")
-    let [x2,y2] = goto.split("-")
+  function endgameMoveBrick(current, goto) {
+    let [x1, y1, team] = current.split("-");
+    let [x2, y2] = goto.split("-");
 
-    let newGameMap = [...gameMap]
-    newGameMap[x1][y1] = 0
-    newGameMap[x2][y2] = parseInt(team)
-    setGameMap(newGameMap)
-    return newGameMap
+    let newGameMap = [...gameMap];
+    newGameMap[x1][y1] = 0;
+    newGameMap[x2][y2] = parseInt(team);
+    setGameMap(newGameMap);
+    return newGameMap;
   }
 
   function possibleMovesGen(current) {
-    let [x1,y1] = current.split("-")
+    let [x1, y1] = current.split("-");
 
-    let layerMoveLoop = [1,0,1,2,1]
-    let spotMoveLoop = [7,0,1,2,3,4,5,6,7,0]
+    let layerMoveLoop = [1, 0, 1, 2, 1];
+    let spotMoveLoop = [7, 0, 1, 2, 3, 4, 5, 6, 7, 0];
 
-    let possibleMovements = []
-    x1 = parseInt(x1)
-    y1 = parseInt(y1)
-    if(y1 % 2 === 1) {  //may be a bug here somewhere
-      if(gameMap[layerMoveLoop[x1+2]][spotMoveLoop[y1+1]] === 0) {
-        possibleMovements.push(`${layerMoveLoop[x1+2]}-${spotMoveLoop[y1+1]}-0`)
+    let possibleMovements = [];
+    x1 = parseInt(x1);
+    y1 = parseInt(y1);
+    if (y1 % 2 === 1) {
+      //may be a bug here somewhere
+      if (gameMap[layerMoveLoop[x1 + 2]][spotMoveLoop[y1 + 1]] === 0) {
+        possibleMovements.push(
+          `${layerMoveLoop[x1 + 2]}-${spotMoveLoop[y1 + 1]}-0`
+        );
       }
-      if(gameMap[layerMoveLoop[x1]][spotMoveLoop[y1+1]] === 0) {
-        possibleMovements.push(`${layerMoveLoop[x1]}-${spotMoveLoop[y1+1]}-0`)
+      if (gameMap[layerMoveLoop[x1]][spotMoveLoop[y1 + 1]] === 0) {
+        possibleMovements.push(
+          `${layerMoveLoop[x1]}-${spotMoveLoop[y1 + 1]}-0`
+        );
       }
     }
 
-    if(gameMap[layerMoveLoop[x1+1]][spotMoveLoop[y1+2]] === 0) {
-      possibleMovements.push(`${layerMoveLoop[x1+1]}-${spotMoveLoop[y1+2]}-0`)
+    if (gameMap[layerMoveLoop[x1 + 1]][spotMoveLoop[y1 + 2]] === 0) {
+      possibleMovements.push(
+        `${layerMoveLoop[x1 + 1]}-${spotMoveLoop[y1 + 2]}-0`
+      );
     }
-    if(gameMap[layerMoveLoop[x1+1]][spotMoveLoop[y1]] === 0) {
-      possibleMovements.push(`${layerMoveLoop[x1+1]}-${spotMoveLoop[y1]}-0`)
+    if (gameMap[layerMoveLoop[x1 + 1]][spotMoveLoop[y1]] === 0) {
+      possibleMovements.push(`${layerMoveLoop[x1 + 1]}-${spotMoveLoop[y1]}-0`);
     }
-    return possibleMovements
+    return possibleMovements;
   }
 
-  function moveBrick(current,goto,possibleMovements) {
-    let [x1,y1,team] = current.split("-")
-    let [x2,y2] = goto.split("-")
+  function moveBrick(current, goto, possibleMovements) {
+    let [x1, y1, team] = current.split("-");
+    let [x2, y2] = goto.split("-");
 
-    if(possibleMovements.includes(goto)) {
-      let newGameMap = [...gameMap]
-      newGameMap[x1][y1] = 0
-      newGameMap[x2][y2] = parseInt(team)
-      setGameMap(newGameMap)
-      return [true,newGameMap]
-    }
-    else {
-      return [false,gameMap]
+    if (possibleMovements.includes(goto)) {
+      let newGameMap = [...gameMap];
+      newGameMap[x1][y1] = 0;
+      newGameMap[x2][y2] = parseInt(team);
+      setGameMap(newGameMap);
+      return [true, newGameMap];
+    } else {
+      return [false, gameMap];
     }
   }
 
@@ -572,26 +604,54 @@ function App() {
   const [gameMap, setGameMap] = useState(generateMap(layerAmount));
   return (
     <div className="layersWrapper">
-<div className="line1" style={{
-        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
-        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.1s linear normal" : "line-border-out 0.3s linear normal") : "",
-        }}/>
-      <div className="line2" style={{
-        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
-        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.2s linear normal" : "line-border-out 0.2s linear normal") : "",
-        }}/>
-      <div className="line3" style={{
-        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
-        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.2s linear normal" : "line-border-out 0.2s linear normal") : "",
-        }}/>
-      <div className="line4" style={{
-        backgroundColor:(reactPlaying === 1 ? "#000":"#fff"),
-        animation: gameStart ? (reactPlaying === 1 ? "line-border-in 0.3s linear normal" : "line-border-out 0.1s linear normal") : "",
-        }}/>
+      <div
+        className="line1"
+        style={{
+          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+          animation: gameStart
+            ? reactPlaying === 1
+              ? "line-border-in 0.1s linear normal"
+              : "line-border-out 0.3s linear normal"
+            : "",
+        }}
+      />
+      <div
+        className="line2"
+        style={{
+          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+          animation: gameStart
+            ? reactPlaying === 1
+              ? "line-border-in 0.2s linear normal"
+              : "line-border-out 0.2s linear normal"
+            : "",
+        }}
+      />
+      <div
+        className="line3"
+        style={{
+          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+          animation: gameStart
+            ? reactPlaying === 1
+              ? "line-border-in 0.2s linear normal"
+              : "line-border-out 0.2s linear normal"
+            : "",
+        }}
+      />
+      <div
+        className="line4"
+        style={{
+          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+          animation: gameStart
+            ? reactPlaying === 1
+              ? "line-border-in 0.3s linear normal"
+              : "line-border-out 0.1s linear normal"
+            : "",
+        }}
+      />
       {gameMap.map((layer, layerIndex) => {
         return (
           <div
-          style={{
+            style={{
               position: "absolute",
               left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
               top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
@@ -601,10 +661,14 @@ function App() {
               height: `calc(${
                 90 - (100 / gameMap.length) * layerIndex
               }% - 10% - 1px)`,
-              border: `6px solid ${reactPlaying === 1 ? "#000":"#fff"}`,
-              animation: gameStart ? (reactPlaying === 1 ? "layer-border-in 0.3s linear normal" : "layer-border-out 0.3s linear normal") : "",
+              border: `6px solid ${reactPlaying === 1 ? "#000" : "#fff"}`,
+              animation: gameStart
+                ? reactPlaying === 1
+                  ? "layer-border-in 0.3s linear normal"
+                  : "layer-border-out 0.3s linear normal"
+                : "",
             }}
-            >
+          >
             {layer.map((spot, index) => {
               return (
                 <div
@@ -615,50 +679,77 @@ function App() {
                     height: "40px",
                     left: `calc(${spotSpots[index][0]} - 20px)`,
                     top: `calc(${spotSpots[index][1]} - 21px)`,
-                    display:"flex",
-                    justifyContent:"center",
-                    alignItems:"center",
-                    borderRadius:"8px",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    borderRadius: "8px",
                     backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",
-                    animation: gameStart ? (reactPlaying === 1 ? "spot-color-out 0.2s linear normal" : "spot-color-in 0.2s linear normal") : "",
-
+                    animation: gameStart
+                      ? reactPlaying === 1
+                        ? "spot-color-out 0.2s linear normal"
+                        : "spot-color-in 0.2s linear normal"
+                      : "",
                   }}
                   onClick={(e) => {
                     gameMaster(e);
                   }}
                   id={`${layerIndex}-${index}-${spot}`}
+                >
+                  <div
+                    className="brick"
+                    style={{
+                      opacity: spot === 0 ? "0" : "1",
+                      backgroundColor: spot === 1 ? "#000" : "#fff",
+                    }}
                   >
-                    <div className="brick" style={{
-                      opacity:(spot === 0 ? "0":"1"),
-                      backgroundColor:(spot === 1 ? "#000":"#fff")
-                      
-                    }}>
-                      <div className="innerBrick" style={{
-                        backgroundColor:(spot === 2 ? "#000":"#fff")
-                      }}>
-
-                      </div>
-                    </div>
+                    <div
+                      className="innerBrick"
+                      style={{
+                        backgroundColor: spot === 2 ? "#000" : "#fff",
+                      }}
+                    ></div>
                   </div>
-                  
+                </div>
               );
             })}
           </div>
         );
       })}
-      <div className="backgroundGradient" style={{
-        left:(reactPlaying === 1 ? "0":"-200vw"),
-        animation: gameStart ? (reactPlaying === 1 ? "gradient-in 0.4s linear normal" : "gradient-out 0.4s linear normal") : "",
-      }}/>
+      <div
+        className="backgroundGradient"
+        style={{
+          left: reactPlaying === 1 ? "0" : "-200vw",
+          animation: gameStart
+            ? reactPlaying === 1
+              ? "gradient-in 0.4s linear normal"
+              : "gradient-out 0.4s linear normal"
+            : "",
+        }}
+      />
       <div className="gameInfo">
         <div className="teamInfo white">
           <h1 className="TeamState whi">{status1}</h1>
-          <h1 className="TeamText white">{reactGameState === 0 ? "placements left:" : "bricks left:"}<br/><span>{reactGameState === 0 ? Math.floor(preGameRounds/2) : brickList[0].length}</span></h1>
+          <h1 className="TeamText white">
+            {reactGameState === 0 ? "placements left:" : "bricks left:"}
+            <br />
+            <span>
+              {reactGameState === 0
+                ? Math.floor(preGameRounds / 2)
+                : brickList[0].length}
+            </span>
+          </h1>
         </div>
         <div className="teamInfo black">
-        <h1 className="TeamText black">{reactGameState === 0 ? "placements left:" : "bricks left:"}<br/><span>{reactGameState === 0 ? Math.ceil(preGameRounds/2) : brickList[1].length}</span></h1>
+          <h1 className="TeamText black">
+            {reactGameState === 0 ? "placements left:" : "bricks left:"}
+            <br />
+            <span>
+              {reactGameState === 0
+                ? Math.ceil(preGameRounds / 2)
+                : brickList[1].length}
+            </span>
+          </h1>
           <h1 className="TeamState bla">{status2}</h1>
-
         </div>
       </div>
     </div>
