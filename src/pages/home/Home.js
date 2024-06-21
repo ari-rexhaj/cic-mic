@@ -35,6 +35,7 @@ const Home = () => {
 
   return (
     <div className="homeWrapper">
+      <p onClick={() => {window.open("https://github.com/ari-rexhaj/cic-mic")}} className="trademark"> Please report bugs via the github page!<br/><span>Developed with love by Ari Rexhaj</span></p>
       <div className="homeTitle">
         <div>
           <div className="innerBrick" />

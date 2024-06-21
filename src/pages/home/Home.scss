@@ -6,6 +6,23 @@
     min-height: 100vh;
     gap: 10px;
 
+    .trademark {
+        position: fixed;
+        left: 2px;
+        bottom: 2px;
+        margin: 0;
+        font-size: 1vw;
+        
+        &:hover {
+            cursor: help;
+        }
+
+        span {
+            font-weight: 600;
+            font-size: 1.5vw;
+        }
+    }
+
     .homeTitle {
         margin-top: 50px;
         margin-bottom: 20px;
@@ -122,7 +139,6 @@
 
     .howTo {
         display: flex;
-        transition: 0.2s;
         flex-direction: column;
         width: 50vw;
         margin-bottom: 50px;
