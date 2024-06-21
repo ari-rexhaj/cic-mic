@@ -156,7 +156,7 @@ const Home = () => {
         <p>if the bricks inner color blinked red, that means that the brick has no possible moves, and you need to select another brick</p>
         <h4>brick turns yellow:</h4>
         <p>if the bricks inner color turns yellow, that means that it is possible to move the brick. Simply click a neighboring spot that is unoccupied to move it to that spot</p>
-        <h4>brick turns yellow, but blinked red twice</h4>
+        <h4>brick turns yellow, but blinked red twice:</h4>
         <p>this only happens in the midgame phase and if you've selected a brick that has atleast one possible move, but the spot you tried to move it to was not one of them. Remember to only select a <span>neighboring spot</span>  that is unoccupied</p>
         <h4>enemies walled bricks turns grey:</h4>
         <p>this happens when you've formed a wall, and it helps you see which bricks cannot be removed. As stated in <span>rule 2</span></p>
