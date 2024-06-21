@@ -199,6 +199,7 @@
   display: flex;
   justify-content: space-between;
   width: 50%;
+  align-items: center;
 }
 
 .TeamText {
@@ -207,14 +208,26 @@
   font-size: 3vh;
   color: #000;
   line-height: 4vh;
+  width: 33%;
 }
 
 .TeamState {
   user-select: none;
+  font-size: 4vh;
+  margin: 0;
+  width: 66%;
 }
 
 .black {
   color: #fff;
+}
+
+.whi {
+  text-align: start;
+}
+
+.bla {
+  text-align: end;
 }
 
 .white {

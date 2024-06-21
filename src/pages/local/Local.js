@@ -652,12 +652,12 @@ function App() {
       }}/>
       <div className="gameInfo">
         <div className="teamInfo white">
-          <h1 className="TeamState white">{status1}</h1>
+          <h1 className="TeamState whi">{status1}</h1>
           <h1 className="TeamText white">{reactGameState === 0 ? "placements left:" : "bricks left:"}<br/><span>{reactGameState === 0 ? Math.floor(preGameRounds/2) : brickList[0].length}</span></h1>
         </div>
         <div className="teamInfo black">
         <h1 className="TeamText black">{reactGameState === 0 ? "placements left:" : "bricks left:"}<br/><span>{reactGameState === 0 ? Math.ceil(preGameRounds/2) : brickList[1].length}</span></h1>
-          <h1 className="TeamState black">{status2}</h1>
+          <h1 className="TeamState bla">{status2}</h1>
 
         </div>
       </div>
