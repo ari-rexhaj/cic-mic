@@ -26,6 +26,7 @@ function generateMap(layers) {
   }
   return map;
 }
+document.getElementById("root").style.overflow = "hidden"
 
 let wallList = [[], []];
 function wallCheck(brickDiv, map) {

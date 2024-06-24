@@ -3,8 +3,7 @@
   top: 0;
   left: 0;
   width: 100vw;
-  height: 100vh;
-  height: 100svh;
+  height: 100dvh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -16,7 +15,7 @@
   z-index: -3;
   top: 0;
   width: 300vw;
-  height: 100vh;
+  height: 100dvh;
   background: rgb(255, 255, 255);
   background: -moz-linear-gradient(
     90deg,
