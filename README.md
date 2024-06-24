@@ -1,14 +1,1 @@
-# HOW TO PLAY
-[cic mic website](https://cic-mic.vercel.app/)
-
-### To learn how to play, run the game and find out! Bitch!
-
-### **Game is now in a stable state, please report any bugs found on github issues**
-
-### whats missing:
-- checking for more bugs
-- VS bot
-- online multiplayer
-- quickmatch? (probably wont do this)
-## known bugs:
-- NONE!! is this a good thing or a bad thing?
+this has an alternative rule where if you form a wall while all enemy bricks are walled, then you can remove one brick from the enemies wall. PERSONALLY i think this makes for a worse game, as it introduces some pretty boring interactions specifically in the pregame. But this appearently is the correct way to play
