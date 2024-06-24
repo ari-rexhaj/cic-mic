@@ -84,7 +84,7 @@ const Home = () => {
         Play multiplayer (COMING SOON)
       </button>
       <div className="howTo">
-        <h1>how to play cic mic, an albanian board game</h1>
+        <h2>how to play cic mic, an albanian board game</h2>
         <h2>general rules (rules that apply at all times):</h2>
         <p>
           <strong>1.</strong> if a player gets 3 bricks in a straight horizontal
@@ -205,7 +205,7 @@ const Home = () => {
           bricks cannot be removed. As stated in <span>rule 2</span>
         </p>
 
-        <h1>thank you for playing!</h1>
+        <h2>thank you for playing!</h2>
       </div>
       <p onClick={() => {window.open("https://github.com/ari-rexhaj/cic-mic")}} className="trademark"> Please report bugs via the github page!<br/><span>Developed with {selectedTrademark} by Ari Rexhaj</span></p>
     </div>
