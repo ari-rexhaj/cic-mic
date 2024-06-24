@@ -44,7 +44,6 @@
 .brick {
   transform: rotate(0deg);  /*makes this stupid shit behave*/
   pointer-events: none;
-  transition: 0.08s;
   width: 150%;
   height: 150%;
   position: absolute;
