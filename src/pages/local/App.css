@@ -170,7 +170,7 @@
   z-index: -2;
   pointer-events: none;
   position: absolute;
-  width: 33.33333333vw;
+  width: 33.33333333%;
   left: 5%;
   top: calc(45% - 3px);
   height: 6px;
@@ -181,7 +181,7 @@
   position: absolute;
   top: 5%;
   left: calc(50% - 3px);
-  height: 33.333333333vh;
+  height: 33.333333333%;
   width: 6px;
 }
 
@@ -189,7 +189,7 @@
   z-index: -2;
   pointer-events: none;
   position: absolute;
-  width: 33.33333333vw;
+  width: 33.33333333%;
   right: 5%;
   top: calc(45% - 3px);
   height: 6px;
@@ -200,7 +200,7 @@
   position: absolute;
   bottom: 15%;
   left: calc(50% - 3px);
-  height: 33.333333333vh;
+  height: 33.333333333%;
   width: 6px;
 }
 
