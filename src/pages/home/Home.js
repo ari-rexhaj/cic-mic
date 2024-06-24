@@ -2,6 +2,9 @@ import React from "react";
 import { useState } from "react";
 import "./Home.scss";
 
+let trademark = ["love","hate","jan","prayers","notepad","[I SEE YOU]"]
+const selectedTrademark = trademark[Math.round(Math.random() * (trademark.length-1))]
+
 const Home = () => {
   const [local1, setLocal1] = useState(false);
   const [local2, setLocal2] = useState(false);
@@ -35,7 +38,6 @@ const Home = () => {
 
   return (
     <div className="homeWrapper">
-      <p onClick={() => {window.open("https://github.com/ari-rexhaj/cic-mic")}} className="trademark"> Please report bugs via the github page!<br/><span>Developed with love by Ari Rexhaj</span></p>
       <div className="homeTitle">
         <div>
           <div className="innerBrick" />
@@ -224,6 +226,7 @@ const Home = () => {
 
         <h1>thank you for playing!</h1>
       </div>
+      <p onClick={() => {window.open("https://github.com/ari-rexhaj/cic-mic")}} className="trademark"> Please report bugs via the github page!<br/><span>Developed with {selectedTrademark} by Ari Rexhaj</span></p>
     </div>
   );
 };

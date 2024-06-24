@@ -19,7 +19,7 @@
 
         span {
             font-weight: 600;
-            font-size: 1.5vw;
+            font-size: 1.3vw;
         }
     }
 
@@ -128,7 +128,7 @@
         height: 40px;
         background-color: white;
         border-radius: 6px;
-        border-style: solid;
+        border: 2px solid #e3e3e3;
 
         &:hover {
             cursor: pointer;
@@ -170,6 +170,40 @@
             span {
                 font-weight: 700;
             }
+        }
+    }
+}
+
+@media screen and (max-width:810px) {
+
+    .howTo {
+        width: 90% !important;
+    }
+
+    .trademark {
+        background-color: white;
+        font-size: 1.5vh !important;
+        span {
+            font-size: 2vh !important;
+        }
+    }
+
+    .homeTitle {
+        h1 {
+            font-size: 7vh !important;
+            line-height: 3vh !important;
+
+            span {
+                font-size: 3vh !important;
+            }
+        }
+    }
+
+    .homeWrapper {
+        align-items: start;
+        padding: 0 20px;
+        button {
+            width: 100px;
         }
     }
 }
