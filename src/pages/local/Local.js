@@ -149,6 +149,9 @@ function App() {
     }
   }
   function gameMaster(brickDiv) {
+    if(gameState === 2) {
+      return
+    }
     //controls the game
     gameStart = true;
     function switchTurn() {
@@ -187,6 +190,7 @@ function App() {
           gameState = 2;
           setGameState(2);
           handleStatusUpdate("You won!", playing);
+          return
         }
 
         updateMapSpot(brickDiv, 0);
