@@ -129,6 +129,8 @@ let gameStart = false;
 let currentBrick = undefined;
 let currentBrickDiv = undefined;
 let gotoBrick = undefined;
+let allBricksWalled = false;
+
 let starterRes = "2vh"
 if(window.innerWidth < 450) {
   starterRes = "16px";
@@ -174,12 +176,19 @@ function App() {
         handleStatusUpdate("can only remove enemy bricks!", playing);
         return;
       } else {
-        for (let wall of wallList[enemy - 1]) {
-          if (wall.includes(brickDiv.target.id)) {
-            handleStatusUpdate("can't remove walled brick!", playing);
-            return;
+
+        if(!allBricksWalled) {
+          for (let wall of wallList[enemy - 1]) {
+            if (wall.includes(brickDiv.target.id)) {
+              handleStatusUpdate("can't remove walled brick!", playing);
+              return;
+            }
           }
         }
+        else {
+          allBricksWalled = false;
+        }
+
         //if the player can remove brick, the next click event will turn brick to team 0 (unoccupied)
         for (let i = 0; i < brickList[enemy - 1].length; i++) {
           if (brickList[enemy - 1][i] === brickDiv.target.id) {
@@ -522,7 +531,6 @@ function App() {
         }
       }
       if (clonedBrickList.length === 0) {
-        handleStatusUpdate("No brick lost; all bricks walled", enemy);
         for (let wall of wallList[enemy - 1]) {
           for (let brick of wall) {
             if (enemy === 1) {
@@ -536,8 +544,8 @@ function App() {
             }
           }
         }
-        switchTurn();
-        newWall = false;
+        allBricksWalled = true;
+        return
       }
     }
   }
