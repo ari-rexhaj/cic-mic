@@ -151,6 +151,9 @@ function App() {
     }
   }
   function gameMaster(brickDiv) {
+    if(gameState === 2) {
+      return
+    }
     //controls the game
     gameStart = true;
     function switchTurn() {
@@ -196,6 +199,7 @@ function App() {
           gameState = 2;
           setGameState(2);
           handleStatusUpdate("You won!", playing);
+          return
         }
 
         updateMapSpot(brickDiv, 0);
@@ -527,7 +531,6 @@ function App() {
         }
       }
       if (clonedBrickList.length === 0) {
-        handleStatusUpdate("No brick lost; all bricks walled", enemy);
         for (let wall of wallList[enemy - 1]) {
           for (let brick of wall) {
             if (enemy === 1) {
@@ -543,8 +546,6 @@ function App() {
         }
         allBricksWalled = true;
         return
-        switchTurn();
-        newWall = false;
       }
     }
   }
