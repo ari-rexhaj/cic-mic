@@ -476,6 +476,7 @@ function App() {
         setGameState(1);
         if (!newWall) {
           switchTurn();
+          return
         }
       } else {
         handleStatusUpdate("placing a brick", enemy);
