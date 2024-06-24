@@ -8,7 +8,6 @@ const selectedTrademark = trademark[Math.round(Math.random() * (trademark.length
 const Home = () => {
   const [local1, setLocal1] = useState(false);
   const [local2, setLocal2] = useState(false);
-  const [howto, sethowto] = useState(false);
 
   function handleButtonPress(index) {
     if (index === 0) {
@@ -18,21 +17,10 @@ const Home = () => {
       } else {
         setLocal1(true);
       }
-      sethowto(false);
     }
     if (index === 1) {
       //opens bot difficulty menu
       setLocal2(true);
-    }
-    if (index === 2) {
-      if (howto === true) {
-        sethowto(false);
-      } else {
-        sethowto(true);
-      }
-      //opens multiplayer menu
-      setLocal1(false);
-      setLocal2(false);
     }
   }
 
@@ -95,14 +83,7 @@ const Home = () => {
       >
         Play multiplayer (COMING SOON)
       </button>
-      <button
-        onClick={() => {
-          handleButtonPress(2);
-        }}
-      >
-        How to play
-      </button>
-      <div className="howTo" style={{ display: howto ? "flex" : "none" }}>
+      <div className="howTo">
         <h1>how to play cic mic, an albanian board game</h1>
         <h2>general rules (rules that apply at all times):</h2>
         <p>
