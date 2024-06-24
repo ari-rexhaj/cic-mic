@@ -12,3 +12,5 @@
 - quickmatch? (probably wont do this)
 ## known bugs:
 - NONE!! is this a good thing or a bad thing?
+
+is the code good? probably not. does it work? yes.
