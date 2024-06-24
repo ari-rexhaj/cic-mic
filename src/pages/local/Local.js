@@ -129,9 +129,9 @@ let gameStart = false;
 let currentBrick = undefined;
 let currentBrickDiv = undefined;
 let gotoBrick = undefined;
-let starterRes = "1.5vw"
+let starterRes = "2vh"
 if(window.innerWidth < 450) {
-  starterRes = "10px";
+  starterRes = "16px";
 }
 
 function App() {

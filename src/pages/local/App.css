@@ -158,8 +158,8 @@
 .spot {
   position: absolute;
   z-index: 100;
-  width: 3vw;
-  height: 3vw;
+  width: 4vh;
+  height: 4vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -227,15 +227,15 @@
 .TeamText {
   user-select: none;
   margin: 0;
-  font-size: 2vw;
+  font-size: 2vh;
   color: #000;
-  line-height: 3vw;
+  line-height: 4vh;
   width: 33%;
 }
 
 .TeamState {
   user-select: none;
-  font-size: 3vw;
+  font-size: 4vh;
   margin: 0;
   width: 66%;
   height: 100%;
@@ -258,17 +258,10 @@
 }
 
 .TeamText span {
-  font-size: 4vw;
+  font-size: 6vh;
 }
 
-@media screen and (max-width: 450px) {
-  .spot {
-    width: 20px;
-    height: 20px;
-  }
-}
-
-@media screen and (max-width: 1079px) {
+@media screen and (max-width: 900px) {
   .gameInfo {
     flex-direction: column;
   }
@@ -279,19 +272,38 @@
   }
 
   .TeamText {
-    font-size: 3vw;
-    line-height: 4vw;
+    font-size: 2vh;
+    line-height: 4vh;
   }
 
   .TeamText span {
-    font-size: 6vw;
+    font-size: 6vh;
   }
 
   .TeamState {
-    font-size: 5vw;
+    font-size: 4vh;
   }
 }
 
+@media screen and (max-width: 450px) {
+  .spot {
+    width: 32px;
+    height: 32px;
+  }
+
+  .TeamText {
+    font-size: 2vh;
+    line-height: 3vh;
+  }
+
+  .TeamText span {
+    font-size: 5vh;
+  }
+
+  .TeamState {
+    font-size: 3vh;
+  }
+}
 
 @keyframes line-border-in {
   0% {
