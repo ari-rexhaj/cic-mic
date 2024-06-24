@@ -128,12 +128,17 @@ let gameStart = false;
 let currentBrick = undefined;
 let currentBrickDiv = undefined;
 let gotoBrick = undefined;
+let starterRes = "1.5vw"
+if(window.innerWidth < 450) {
+  starterRes = "10px";
+}
 
 function App() {
   const [reactPlaying, setPlaying] = useState(playing);
   const [reactGameState, setGameState] = useState(gameState);
   const [status1, setStatus1] = useState("Making the first move!");
   const [status2, setStatus2] = useState("thy trespass has not gone unseen...");
+ 
   function handleStatusUpdate(value, team) {
     if (team === 1) {
       setStatus1(value);
@@ -650,17 +655,16 @@ function App() {
       />
       {gameMap.map((layer, layerIndex) => {
         return (
-          <div
+          <div className="layer"
             style={{
-              position: "absolute",
               left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
               top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
               width: `calc(${
                 100 - (100 / gameMap.length) * layerIndex
-              }% - 10% - 1px)`,
+              }% - 10% - 6px)`,
               height: `calc(${
                 90 - (100 / gameMap.length) * layerIndex
-              }% - 10% - 1px)`,
+              }% - 10% - 6px)`,
               border: `6px solid ${reactPlaying === 1 ? "#000" : "#fff"}`,
               animation: gameStart
                 ? reactPlaying === 1
@@ -671,18 +675,10 @@ function App() {
           >
             {layer.map((spot, index) => {
               return (
-                <div
+                <div className="spot"
                   style={{
-                    position: "absolute",
-                    zIndex: "100",
-                    width: "40px",
-                    height: "40px",
-                    left: `calc(${spotSpots[index][0]} - 20px)`,
-                    top: `calc(${spotSpots[index][1]} - 21px)`,
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    borderRadius: "8px",
+                    left: `calc(${spotSpots[index][0]} - ${starterRes})`,
+                    top: `calc(${spotSpots[index][1]} - ${starterRes})`,
                     backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",
                     animation: gameStart
                       ? reactPlaying === 1
@@ -727,7 +723,7 @@ function App() {
         }}
       />
       <div className="gameInfo">
-        <div className="teamInfo white">
+        <div className="teamInfo white" style={{opacity:reactPlaying === 1 ? "1":"0"}}>
           <h1 className="TeamState whi">{status1}</h1>
           <h1 className="TeamText white">
             {reactGameState === 0 ? "placements left:" : "bricks left:"}
@@ -739,7 +735,7 @@ function App() {
             </span>
           </h1>
         </div>
-        <div className="teamInfo black">
+        <div className="teamInfo black" style={{opacity:reactPlaying === 2 ? "1":"0"}}>
           <h1 className="TeamText black">
             {reactGameState === 0 ? "placements left:" : "bricks left:"}
             <br />

@@ -42,11 +42,15 @@
 }
 
 .brick {
+  transform: rotate(0deg);  /*makes this stupid shit behave*/
   pointer-events: none;
   transition: 0.08s;
   width: 150%;
   height: 150%;
   position: absolute;
+  display:flex;
+  justify-content: center;
+  align-items: center;
   clip-path: polygon(
     50% 0%,
     50% 0%,
@@ -70,11 +74,8 @@
 .innerBrick {
   pointer-events: none;
   transition: 0.5s;
-  width: calc(100% - 16px);
-  height: calc(100% - 16px);
-  left: 8px;
-  top: 8px;
-  position: absolute;
+  width: 80%;
+  height: 80%;
   clip-path: polygon(
     50% 0%,
     50% 0%,
@@ -102,6 +103,9 @@
   width: 196%;
   height: 196%;
   position: absolute;
+  display:flex;
+  justify-content: center;
+  align-items: center;
   clip-path: polygon(
     50% 1%,
     63% 20%,
@@ -123,10 +127,10 @@
 }
 
 .walled div {
-  width: calc(100% - 20px);
-  height: calc(100% - 20px);
-  left: 10px;
-  top: 10px;
+  width: 80%;
+  height: 80%;
+  left: 10%;
+  top: 10%;
   clip-path: polygon(
     50% 1%,
     63% 20%,
@@ -147,13 +151,28 @@
   );
 }
 
+.layer {
+  position: absolute;
+}
+
+.spot {
+  position: absolute;
+  z-index: 100;
+  width: 3vw;
+  height: 3vw;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 20%;
+}
+
 .line1 {
   z-index: -2;
   pointer-events: none;
   position: absolute;
   width: 33.33333333vw;
   left: 5%;
-  top: 45%;
+  top: calc(45% - 3px);
   height: 6px;
 }
 .line2 {
@@ -161,6 +180,7 @@
   pointer-events: none;
   position: absolute;
   top: 5%;
+  left: calc(50% - 3px);
   height: 33.333333333vh;
   width: 6px;
 }
@@ -171,7 +191,7 @@
   position: absolute;
   width: 33.33333333vw;
   right: 5%;
-  top: 45%;
+  top: calc(45% - 3px);
   height: 6px;
 }
 .line4 {
@@ -179,6 +199,7 @@
   pointer-events: none;
   position: absolute;
   bottom: 15%;
+  left: calc(50% - 3px);
   height: 33.333333333vh;
   width: 6px;
 }
@@ -200,22 +221,24 @@
   justify-content: space-between;
   width: 50%;
   align-items: center;
+  transition: 0.3s;
 }
 
 .TeamText {
   user-select: none;
   margin: 0;
-  font-size: 3vh;
+  font-size: 2vw;
   color: #000;
-  line-height: 4vh;
+  line-height: 3vw;
   width: 33%;
 }
 
 .TeamState {
   user-select: none;
-  font-size: 4vh;
+  font-size: 3vw;
   margin: 0;
   width: 66%;
+  height: 100%;
 }
 
 .black {
@@ -235,8 +258,40 @@
 }
 
 .TeamText span {
-  font-size: 7vh;
+  font-size: 4vw;
 }
+
+@media screen and (max-width: 450px) {
+  .spot {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+@media screen and (max-width: 1079px) {
+  .gameInfo {
+    flex-direction: column;
+  }
+  .teamInfo {
+    position: absolute;
+    width: 80%;
+    justify-content: space-evenly;
+  }
+
+  .TeamText {
+    font-size: 3vw;
+    line-height: 4vw;
+  }
+
+  .TeamText span {
+    font-size: 6vw;
+  }
+
+  .TeamState {
+    font-size: 5vw;
+  }
+}
+
 
 @keyframes line-border-in {
   0% {
