@@ -515,21 +515,6 @@ function App() {
 
         return;
       }
-      if (!canFly[enemy - 1]) {
-        console.log(canFly);
-        let hasAPossibleMove = false;
-        for (let brick of brickList[enemy - 1]) {
-          if (possibleMovesGen(brick).length !== 0) {
-            hasAPossibleMove = true;
-            break;
-          }
-        }
-        if (!hasAPossibleMove) {
-          handleStatusUpdate("Enemy has no moves, playing again", playing);
-          console.log()
-          return;
-        }
-      }
     }
 
     if (gameState === 0) {
