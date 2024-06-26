@@ -4,10 +4,12 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import "./index.css";
 import Local from "./pages/local/Local.js";
 import Home from "./pages/home/Home.js";
+import { Analytics } from "@vercel/analytics/react"
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
+    <Analytics/>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home/>}/>

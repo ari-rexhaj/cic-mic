@@ -26,7 +26,7 @@ function generateMap(layers) {
   }
   return map;
 }
-document.getElementById("root").style.overflow = "hidden"
+document.getElementById("root").style.overflow = "hidden";
 
 let wallList = [[], []];
 function wallCheck(brickDiv, map) {
@@ -131,8 +131,8 @@ let currentBrickDiv = undefined;
 let gotoBrick = undefined;
 let allBricksWalled = false;
 
-let starterRes = "2vh"
-if(window.innerWidth < 450) {
+let starterRes = "2vh";
+if (window.innerWidth < 450) {
   starterRes = "16px";
 }
 
@@ -141,7 +141,7 @@ function App() {
   const [reactGameState, setGameState] = useState(gameState);
   const [status1, setStatus1] = useState("Making the first move!");
   const [status2, setStatus2] = useState("thy trespass has not gone unseen...");
- 
+
   function handleStatusUpdate(value, team) {
     if (team === 1) {
       setStatus1(value);
@@ -151,8 +151,8 @@ function App() {
     }
   }
   function gameMaster(brickDiv) {
-    if(gameState === 2) {
-      return
+    if (gameState === 2) {
+      return;
     }
     //controls the game
     gameStart = true;
@@ -176,16 +176,14 @@ function App() {
         handleStatusUpdate("can only remove enemy bricks!", playing);
         return;
       } else {
-
-        if(!allBricksWalled) {
+        if (!allBricksWalled) {
           for (let wall of wallList[enemy - 1]) {
             if (wall.includes(brickDiv.target.id)) {
               handleStatusUpdate("can't remove walled brick!", playing);
               return;
             }
           }
-        }
-        else {
+        } else {
           allBricksWalled = false;
         }
 
@@ -199,7 +197,7 @@ function App() {
           gameState = 2;
           setGameState(2);
           handleStatusUpdate("You won!", playing);
-          return
+          return;
         }
 
         updateMapSpot(brickDiv, 0);
@@ -489,7 +487,7 @@ function App() {
         setGameState(1);
         if (!newWall) {
           switchTurn();
-          return
+          return;
         }
       } else {
         handleStatusUpdate("placing a brick", enemy);
@@ -497,8 +495,8 @@ function App() {
     }
 
     if (!newWall) {
-      if(gameState === 2) {
-        return
+      if (gameState === 2) {
+        return;
       }
       //when turn ends, switch turn
       switchTurn();
@@ -545,7 +543,7 @@ function App() {
           }
         }
         allBricksWalled = true;
-        return
+        return;
       }
     }
   }
@@ -669,7 +667,8 @@ function App() {
       />
       {gameMap.map((layer, layerIndex) => {
         return (
-          <div className="layer"
+          <div
+            className="layer"
             style={{
               left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
               top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
@@ -689,7 +688,8 @@ function App() {
           >
             {layer.map((spot, index) => {
               return (
-                <div className="spot"
+                <div
+                  className="spot"
                   style={{
                     left: `calc(${spotSpots[index][0]} - ${starterRes})`,
                     top: `calc(${spotSpots[index][1]} - ${starterRes})`,
@@ -737,7 +737,10 @@ function App() {
         }}
       />
       <div className="gameInfo">
-        <div className="teamInfo white" style={{opacity:reactPlaying === 1 ? "1":"0"}}>
+        <div
+          className="teamInfo white"
+          style={{ opacity: reactPlaying === 1 ? "1" : "0" }}
+        >
           <h1 className="TeamState whi">{status1}</h1>
           <h1 className="TeamText white">
             {reactGameState === 0 ? "placements left:" : "bricks left:"}
@@ -749,7 +752,10 @@ function App() {
             </span>
           </h1>
         </div>
-        <div className="teamInfo black" style={{opacity:reactPlaying === 2 ? "1":"0"}}>
+        <div
+          className="teamInfo black"
+          style={{ opacity: reactPlaying === 2 ? "1" : "0" }}
+        >
           <h1 className="TeamText black">
             {reactGameState === 0 ? "placements left:" : "bricks left:"}
             <br />
