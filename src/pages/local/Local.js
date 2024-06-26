@@ -18,14 +18,14 @@ const spotSpots = [
 ];
 
 const spotOffsets = [
-  ["-3px","-3px"],
-  ["0px","-3px"],
-  ["3px","-3px"],
-  ["3px","0px"],
-  ["3px","3px"],
-  ["0px","3px"],
-  ["-3px","3px"],
-  ["-3px","0px"]
+  [-1,-1],
+  [0,-1],
+  [1,-1],
+  [1,0],
+  [1,1],
+  [0,1],
+  [-1,1],
+  [-1,0]
 ]
 
 const layerAmount = 3;
@@ -737,8 +737,8 @@ function App() {
                 <div
                   className="spot"
                   style={{
-                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][0]}`:""})`,
-                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][1]}`:""})`,
+                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][0]*3}px`:`+ ${spotOffsets[index][0]}px`})`,
+                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][1]*3}px`:`+ ${spotOffsets[index][1]}px`})`,
                     width:`${starterRes[0]}${starterRes[1]}`,
                     height:`${starterRes[0]}${starterRes[1]}`,
                     backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",

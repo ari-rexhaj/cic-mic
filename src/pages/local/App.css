@@ -50,7 +50,6 @@
   pointer-events: none;
   width: 150%;
   height: 150%;
-  position: absolute;
   display:flex;
   justify-content: center;
   align-items: center;
