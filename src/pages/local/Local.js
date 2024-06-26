@@ -142,6 +142,7 @@ let currentBrick = undefined;
 let currentBrickDiv = undefined;
 let gotoBrick = undefined;
 let allBricksWalled = false;
+let canMoveBricks = true;
 
 let starterValue = [2.2, "vw"];
 if (window.innerWidth < window.innerHeight) {
@@ -187,6 +188,7 @@ function App() {
     }
     //controls the game
     gameStart = true;
+    canMoveBricks = true;
     function switchTurn() {
       if (playing === 1) {
         playing = 2;
@@ -265,16 +267,18 @@ function App() {
             }
           }
         }
-        let hasAPossibleMove = false;
-        for (let brick of brickList[enemy - 1]) {
-          if (possibleMovesGen(brick).length !== 0) {
-            hasAPossibleMove = true;
-            break;
+        if(brickList[enemy-1].length > 3) {
+          let hasAPossibleMove = false;
+          for (let brick of brickList[enemy - 1]) {
+            if (possibleMovesGen(brick).length !== 0) {
+              hasAPossibleMove = true;
+              break;
+            }
           }
-        }
-        if (!hasAPossibleMove) {
-          handleStatusUpdate("Enemy has no moves, playing again", playing);
-          return;
+          if (!hasAPossibleMove) {
+            handleStatusUpdate("Enemy has no moves, play again", playing);
+            return;
+          }
         }
         switchTurn();
         return;
@@ -285,9 +289,13 @@ function App() {
       //midgame
       handleStatusUpdate("moving a brick", enemy);
       //endgame
-      if (brickList[playing - 1].length < 4) {
-        endgame[playing-1] = true;
+      if (brickList[0].length < 4) {
+        endgame[0] = true;
       }
+      if (brickList[1].length < 4) {
+        endgame[1] = true;
+      }
+      console.log(endgame)
 
       if (currentBrick === undefined) {
         if (brickDiv.target.id.split("-")[2] !== playing.toString()) {
@@ -469,7 +477,7 @@ function App() {
         currentBrick = undefined;
         currentBrickDiv = undefined;
 
-        if (!endgame[playing-1]) {
+        if (brickList[enemy-1].length > 3) {
           let hasAPossibleMove = false;
           for (let brick of brickList[enemy - 1]) {
             if (possibleMovesGen(brick).length !== 0) {
@@ -479,7 +487,7 @@ function App() {
           }
           if (!hasAPossibleMove) {
             handleStatusUpdate("Enemy has no moves, playing again", playing);
-            return;
+            canMoveBricks = false;
           }
         }
       } else {
@@ -577,11 +585,14 @@ function App() {
         return;
       }
       //when turn ends, switch turn
-      switchTurn();
+      if(canMoveBricks) {
+        switchTurn();
+      }
     } else {
       for (let brick of wallList[playing - 1][
         wallList[playing - 1].length - 1
       ]) {
+        console.log("walling")
         if (document.getElementById(brick) === null) {
           document.getElementById(
             `${brick.split("-")[0]}-${brick.split("-")[1]}-0`

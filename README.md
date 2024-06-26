@@ -11,6 +11,6 @@
 - online multiplayer
 - quickmatch? (probably wont do this)
 ## known bugs:
-- NONE!! is this a good thing or a bad thing?
+- Happened only once, bricks in endgame phase cant move if they dont have any possible midgame moves. (this bug should be fixed but it did happen again for some odd reason)
 
 is the code good? probably not. does it work? yes.
