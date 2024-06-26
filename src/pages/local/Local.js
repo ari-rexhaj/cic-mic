@@ -18,15 +18,15 @@ const spotSpots = [
 ];
 
 const spotOffsets = [
-  [-1, -1],
-  [0, -1],
-  [1, -1],
-  [1, 0],
-  [1, 1],
-  [0, 1],
-  [-1, 1],
-  [-1, 0],
-];
+  [-1,-1],
+  [0,-1],
+  [1,-1],
+  [1,0],
+  [1,1],
+  [0,1],
+  [-1,1],
+  [-1,0]
+]
 
 const layerAmount = 3;
 
@@ -143,14 +143,9 @@ let currentBrickDiv = undefined;
 let gotoBrick = undefined;
 let allBricksWalled = false;
 
-let starterValue = [2.2, "vw"];
-if (window.innerWidth < window.innerHeight) {
-  starterValue = [2.2, "vh"];
-}
-
-let oppositeMode = false;
-if (window.innerWidth > 450) {
-  oppositeMode = true;
+let starterValue = [2.2,"vw"]
+if(window.innerWidth < window.innerHeight) {
+  starterValue = [2.2,"vh"]
 }
 
 function App() {
@@ -158,21 +153,19 @@ function App() {
   const [reactGameState, setGameState] = useState(gameState);
   const [status1, setStatus1] = useState("Making the first move!");
   const [status2, setStatus2] = useState("thy trespass has not gone unseen...");
-  const [starterRes, setStarterRes] = useState(starterValue);
-
+  const [starterRes,setStarterRes] = useState(starterValue)
+  
   window.onresize = () => {
-    console.log("resize");
-    if (window.innerWidth < window.innerHeight) {
-      setStarterRes([2.2, "vh"]);
-    } else {
-      setStarterRes([2.2, "vw"]);
+    console.log("resize")
+    if(window.innerWidth < window.innerHeight) {
+      setStarterRes([2.2,"vh"])
     }
-    if (window.innerWidth > 450) {
-      oppositeMode = true;
-    } else {
-      oppositeMode = false;
+    else{
+      setStarterRes([2.2,"vw"])
     }
-  };
+  }
+  
+
 
   function handleStatusUpdate(value, team) {
     if (team === 1) {
@@ -215,7 +208,8 @@ function App() {
               return;
             }
           }
-        } else {
+        }
+        else {
           for (let i in wallList[enemy - 1]) {
             if (wallList[enemy - 1][i].includes(brickDiv.target.id)) {
               let brokenWall = wallList[enemy - 1].splice(i, 1);
@@ -227,16 +221,15 @@ function App() {
                     break;
                   }
                 }
-
+                
                 if (!inOtherWall) {
-                  document.getElementById(brick).children[0].className =
-                    "brick";
+                  document.getElementById(brick).children[0].className = "brick";
                 }
               }
             }
           }
-          allBricksWalled = false;
-          console.log(wallList);
+          allBricksWalled = false
+          console.log(wallList)
         }
         //if the player can remove brick, the next click event will turn brick to team 0 (unoccupied)
         for (let i = 0; i < brickList[enemy - 1].length; i++) {
@@ -716,22 +709,19 @@ function App() {
         }}
       />
       {gameMap.map((layer, layerIndex) => {
-        let mobile = window.innerWidth > 450 && window.innerHeight > 450;
+        let mobile = window.innerWidth > 450 && window.innerHeight > 450
+        let oppositeMode = window.innerWidth > 450
         return (
           <div
             className="layer"
             style={{
-              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${
-                mobile ? 3 : 0
-              }px)`,
-              top: `calc(${(50 / gameMap.length) * layerIndex}% + ${
-                oppositeMode ? "5%" : "12.5%"
-              } - ${mobile > 450 ? 3 : 0}px)`,
+              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${mobile?3:0}px)`,
+              top: `calc(${(50 / gameMap.length) * layerIndex}% + ${oppositeMode?"5%":"12.5%"} - ${mobile > 450?3:0}px)`,
               width: `calc(${
                 100 - (100 / gameMap.length) * layerIndex
               }% - 10% - 6px)`,
               height: `calc(${
-                (oppositeMode ? 90 : 85) - (100 / gameMap.length) * layerIndex
+               (oppositeMode?90:85) - (100 / gameMap.length) * layerIndex
               }% - 10% - 6px)`,
               border: `6px solid ${reactPlaying === 1 ? "#000" : "#fff"}`,
               animation: gameStart
@@ -746,22 +736,10 @@ function App() {
                 <div
                   className="spot"
                   style={{
-                    left: `calc(${spotSpots[index][0]} - ${starterRes[0] / 2}${
-                      starterRes[1]
-                    } ${
-                      mobile
-                        ? `+ ${spotOffsets[index][0] * 3}px`
-                        : `+ ${spotOffsets[index][0]}px`
-                    })`,
-                    top: `calc(${spotSpots[index][1]} - ${starterRes[0] / 2}${
-                      starterRes[1]
-                    } ${
-                      mobile
-                        ? `+ ${spotOffsets[index][1] * 3}px`
-                        : `+ ${spotOffsets[index][1]}px`
-                    })`,
-                    width: `${starterRes[0]}${starterRes[1]}`,
-                    height: `${starterRes[0]}${starterRes[1]}`,
+                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][0]*3}px`:`+ ${spotOffsets[index][0]}px`})`,
+                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][1]*3}px`:`+ ${spotOffsets[index][1]}px`})`,
+                    width:`${starterRes[0]}${starterRes[1]}`,
+                    height:`${starterRes[0]}${starterRes[1]}`,
                     backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",
                     animation: gameStart
                       ? reactPlaying === 1
@@ -797,52 +775,45 @@ function App() {
       <div
         className="backgroundGradient"
         style={{
-          left: !oppositeMode ? "unset" : reactPlaying === 1 ? "0" : "-200vw",
-          top: !oppositeMode ? reactPlaying === 1 ? "0" : "-200svh" : "unset",
-          width: !oppositeMode ? "100vw" : "300vw",
-          height: oppositeMode ? "100svh" : "300svh",
+          left: reactPlaying === 1 ? "0" : "-200vw",
           animation: gameStart
-            ? !oppositeMode
-              ? reactPlaying === 1
-                ? "gradient-opposite-in 0.4s linear normal"
-                : "gradient-opposite-out 0.4s linear normal"
-              : reactPlaying === 1
+            ? reactPlaying === 1
               ? "gradient-in 0.4s linear normal"
               : "gradient-out 0.4s linear normal"
             : "",
         }}
       />
-      <div
-        className="teamInfo white"
-        style={{ opacity: reactPlaying === 1 ? "1" : "0" }}
-      >
-        <h1 className="TeamState whi">{status1}</h1>
-        <h1 className="TeamText white">
-          {reactGameState === 0 ? "placements left:" : "bricks left:"}
-          <br />
-          <span>
-            {reactGameState === 0
-              ? Math.floor(preGameRounds / 2)
-              : brickList[0].length}
-          </span>
-        </h1>
+        <div
+          className="teamInfo white"
+          style={{ opacity: reactPlaying === 1 ? "1" : "0" }}
+        >
+          <h1 className="TeamState whi">{status1}</h1>
+          <h1 className="TeamText white">
+            {reactGameState === 0 ? "placements left:" : "bricks left:"}
+            <br />
+            <span>
+              {reactGameState === 0
+                ? Math.floor(preGameRounds / 2)
+                : brickList[0].length}
+            </span>
+          </h1>
+        </div>
+        <div
+          className="teamInfo black"
+          style={{ opacity: reactPlaying === 2 ? "1" : "0" }}
+        >
+          <h1 className="TeamText" style={{color:"#fff"}}>
+            {reactGameState === 0 ? "placements left:" : "bricks left:"}
+            <br />
+            <span>
+              {reactGameState === 0
+                ? Math.ceil(preGameRounds / 2)
+                : brickList[1].length}
+            </span>
+          </h1>
+          <h1 className="TeamState bla">{status2}</h1>
+        </div>
       </div>
-      <div
-        className="teamInfo black"
-        style={{ opacity: reactPlaying === 2 ? "1" : "0" }}
-      >
-        <h1 className="TeamText" style={{ color: "#fff" }}>
-          {reactGameState === 0 ? "placements left:" : "bricks left:"}
-          <br />
-          <span>
-            {reactGameState === 0
-              ? Math.ceil(preGameRounds / 2)
-              : brickList[1].length}
-          </span>
-        </h1>
-        <h1 className="TeamState bla">{status2}</h1>
-      </div>
-    </div>
   );
 }
 

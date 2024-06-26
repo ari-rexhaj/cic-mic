@@ -13,6 +13,9 @@
 .backgroundGradient {
   position: absolute;
   z-index: -3;
+  top: 0;
+  width: 300vw;
+  height: 100svh;
   background: rgb(255, 255, 255);
   background: -moz-linear-gradient(
     90deg,
@@ -380,14 +383,6 @@
   .bla {
     text-align: start;
   }
-
-  .backgroundGradient {
-    background: rgb(255,255,255);
-    background: -moz-linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33.333333%, rgba(0,0,0,1) 66.6666666666666%, rgba(0,0,0,1) 100%);
-    background: -webkit-linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33.333333%, rgba(0,0,0,1) 66.6666666666666%, rgba(0,0,0,1) 100%);
-    background: linear-gradient(180deg, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 33.333333%, rgba(0,0,0,1) 66.6666666666666%, rgba(0,0,0,1) 100%);
-    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#ffffff",endColorstr="#000000",GradientType=1); 
-    }
 }
 
 @keyframes line-border-in {
@@ -423,24 +418,6 @@
   }
   100% {
     left: -200vw;
-  }
-}
-
-@keyframes gradient-opposite-in {
-  0% {
-    top: -200svh;
-  }
-  100% {
-    top: 0;
-  }
-}
-
-@keyframes gradient-opposite-out {
-  0% {
-    top: 0;
-  }
-  100% {
-    top: -200svh;
   }
 }
 
