@@ -1,5 +1,5 @@
 # HOW TO PLAY
-[cic mic website](https://cic-mic.vercel.app/)
+[cic mic website](https://cic-mic.com/)
 
 ### To learn how to play, run the game and find out! Bitch!
 
