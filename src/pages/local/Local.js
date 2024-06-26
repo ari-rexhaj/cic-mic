@@ -137,16 +137,16 @@ let newWall = false; //has a new wall been found?
 let brickList = [[], []]; //list of all bricks on board per team
 let possibleMoves = undefined;
 let gameStart = false;
-let endgame = [false,false]
+let endgame = [false, false];
 let currentBrick = undefined;
 let currentBrickDiv = undefined;
 let gotoBrick = undefined;
 let allBricksWalled = false;
 let canMoveBricks = true;
 
-let starterValue = [2.2, "vw"];
+let starterValue = [3.1, "vw"];
 if (window.innerWidth < window.innerHeight) {
-  starterValue = [2.2, "vh"];
+  starterValue = [3.1, "vh"];
 }
 
 let oppositeMode = false;
@@ -163,9 +163,9 @@ function App() {
 
   window.onresize = () => {
     if (window.innerWidth < window.innerHeight) {
-      setStarterRes([2.2, "vh"]);
+      setStarterRes([3.1, "vh"]);
     } else {
-      setStarterRes([2.2, "vw"]);
+      setStarterRes([3.1, "vw"]);
     }
     if (window.innerWidth > 450) {
       oppositeMode = true;
@@ -267,7 +267,7 @@ function App() {
             }
           }
         }
-        if(brickList[enemy-1].length > 3) {
+        if (brickList[enemy - 1].length > 3) {
           let hasAPossibleMove = false;
           for (let brick of brickList[enemy - 1]) {
             if (possibleMovesGen(brick).length !== 0) {
@@ -295,7 +295,7 @@ function App() {
       if (brickList[1].length < 4) {
         endgame[1] = true;
       }
-      console.log(endgame)
+      console.log(endgame);
 
       if (currentBrick === undefined) {
         if (brickDiv.target.id.split("-")[2] !== playing.toString()) {
@@ -322,7 +322,7 @@ function App() {
         currentBrick = brickDiv.target.id;
         currentBrickDiv = brickDiv;
         possibleMoves = possibleMovesGen(currentBrick);
-        if (possibleMoves.length === 0 && !endgame[playing-1]) {
+        if (possibleMoves.length === 0 && !endgame[playing - 1]) {
           currentBrick = undefined;
           currentBrickDiv = undefined;
           handleStatusUpdate("brick can't move!", playing);
@@ -374,7 +374,7 @@ function App() {
 
       if (currentBrick.split("-")[2] === brickDiv.target.id.split("-")[2]) {
         let testMoves = possibleMovesGen(brickDiv.target.id);
-        if (testMoves.length === 0 && !endgame[playing-1]) {
+        if (testMoves.length === 0 && !endgame[playing - 1]) {
           handleStatusUpdate("brick can't move!", playing);
 
           if (playing === 1) {
@@ -428,7 +428,7 @@ function App() {
       let moveSuccess = false;
       let newMap = undefined;
 
-      if (!endgame[playing-1]) {
+      if (!endgame[playing - 1]) {
         let moveResult = moveBrick(currentBrick, gotoBrick, possibleMoves);
         moveSuccess = moveResult[0];
         newMap = moveResult[1];
@@ -477,7 +477,7 @@ function App() {
         currentBrick = undefined;
         currentBrickDiv = undefined;
 
-        if (brickList[enemy-1].length > 3) {
+        if (brickList[enemy - 1].length > 3) {
           let hasAPossibleMove = false;
           for (let brick of brickList[enemy - 1]) {
             if (possibleMovesGen(brick).length !== 0) {
@@ -554,7 +554,7 @@ function App() {
         handleStatusUpdate("moving a brick", enemy);
         setGameState(1);
         if (!newWall) {
-          if(brickList[enemy-1] > 3) {
+          if (brickList[enemy - 1] > 3) {
             let hasAPossibleMove = false;
             for (let brick of brickList[enemy - 1]) {
               if (possibleMovesGen(brick).length !== 0) {
@@ -569,10 +569,9 @@ function App() {
               switchTurn();
               return;
             }
-          }
-          else {
+          } else {
             switchTurn();
-            return
+            return;
           }
         }
       } else {
@@ -585,14 +584,14 @@ function App() {
         return;
       }
       //when turn ends, switch turn
-      if(canMoveBricks) {
+      if (canMoveBricks) {
         switchTurn();
       }
     } else {
       for (let brick of wallList[playing - 1][
         wallList[playing - 1].length - 1
       ]) {
-        console.log("walling")
+        console.log("walling");
         if (document.getElementById(brick) === null) {
           document.getElementById(
             `${brick.split("-")[0]}-${brick.split("-")[1]}-0`
@@ -709,177 +708,184 @@ function App() {
 
   const [gameMap, setGameMap] = useState(generateMap(layerAmount));
   return (
-    <div className="layersWrapper">
-      <div
-        className="line1"
-        style={{
-          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
-          animation: gameStart
-            ? reactPlaying === 1
-              ? "line-border-in 0.1s linear normal"
-              : "line-border-out 0.3s linear normal"
-            : "",
-        }}
-      />
-      <div
-        className="line2"
-        style={{
-          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
-          animation: gameStart
-            ? reactPlaying === 1
-              ? "line-border-in 0.2s linear normal"
-              : "line-border-out 0.2s linear normal"
-            : "",
-        }}
-      />
-      <div
-        className="line3"
-        style={{
-          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
-          animation: gameStart
-            ? reactPlaying === 1
-              ? "line-border-in 0.2s linear normal"
-              : "line-border-out 0.2s linear normal"
-            : "",
-        }}
-      />
-      <div
-        className="line4"
-        style={{
-          backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
-          animation: gameStart
-            ? reactPlaying === 1
-              ? "line-border-in 0.3s linear normal"
-              : "line-border-out 0.1s linear normal"
-            : "",
-        }}
-      />
-      {gameMap.map((layer, layerIndex) => {
-        let mobile = window.innerWidth > 450 && window.innerHeight > 450;
-        return (
-          <div
-            className="layer"
-            style={{
-              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${
-                mobile ? 3 : 0
-              }px)`,
-              top: `calc(${(50 / gameMap.length) * layerIndex}% + ${
-                oppositeMode ? "5%" : "12.5%"
-              } - ${mobile > 450 ? 3 : 0}px)`,
-              width: `calc(${
-                100 - (100 / gameMap.length) * layerIndex
-              }% - 10% - 6px)`,
-              height: `calc(${
-                (oppositeMode ? 90 : 85) - (100 / gameMap.length) * layerIndex
-              }% - 10% - 6px)`,
-              border: `6px solid ${reactPlaying === 1 ? "#000" : "#fff"}`,
-              animation: gameStart
-                ? reactPlaying === 1
-                  ? "layer-border-in 0.3s linear normal"
-                  : "layer-border-out 0.3s linear normal"
-                : "",
-            }}
-          >
-            {layer.map((spot, index) => {
-              return (
-                <div
-                  className="spot"
-                  style={{
-                    left: `calc(${spotSpots[index][0]} - ${starterRes[0] / 2}${
-                      starterRes[1]
-                    } ${
-                      mobile
-                        ? `+ ${spotOffsets[index][0] * 3}px`
-                        : `+ ${spotOffsets[index][0]}px`
-                    })`,
-                    top: `calc(${spotSpots[index][1]} - ${starterRes[0] / 2}${
-                      starterRes[1]
-                    } ${
-                      mobile
-                        ? `+ ${spotOffsets[index][1] * 3}px`
-                        : `+ ${spotOffsets[index][1]}px`
-                    })`,
-                    width: `${starterRes[0]}${starterRes[1]}`,
-                    height: `${starterRes[0]}${starterRes[1]}`,
-                    backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",
-                    animation: gameStart
-                      ? reactPlaying === 1
-                        ? "spot-color-out 0.2s linear normal"
-                        : "spot-color-in 0.2s linear normal"
-                      : "",
-                  }}
-                  onClick={(e) => {
-                    gameMaster(e);
-                  }}
-                  id={`${layerIndex}-${index}-${spot}`}
-                >
+    <div className="GameWrapper">
+      <div className="layersWrapper" style={{height:oppositeMode?"90svh":"85svh",top:oppositeMode?"0":"7.5%"}}>
+        <div
+          className="line1"
+          style={{
+            backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+            animation: gameStart
+              ? reactPlaying === 1
+                ? "line-border-in 0.1s linear normal"
+                : "line-border-out 0.3s linear normal"
+              : "",
+          }}
+        />
+        <div
+          className="line2"
+          style={{
+            backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+            animation: gameStart
+              ? reactPlaying === 1
+                ? "line-border-in 0.2s linear normal"
+                : "line-border-out 0.2s linear normal"
+              : "",
+          }}
+        />
+        <div
+          className="line3"
+          style={{
+            backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+            animation: gameStart
+              ? reactPlaying === 1
+                ? "line-border-in 0.2s linear normal"
+                : "line-border-out 0.2s linear normal"
+              : "",
+          }}
+        />
+        <div
+          className="line4"
+          style={{
+            backgroundColor: reactPlaying === 1 ? "#000" : "#fff",
+            animation: gameStart
+              ? reactPlaying === 1
+                ? "line-border-in 0.3s linear normal"
+                : "line-border-out 0.1s linear normal"
+              : "",
+          }}
+        />
+        {gameMap.map((layer, layerIndex) => {
+          let mobile = window.innerWidth > 450 && window.innerHeight > 450;
+          return (
+            <div
+              className="layer"
+              style={{
+                left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${
+                  mobile ? 3 : 0
+                }px)`,
+                top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${mobile > 450 ? 3 : 0}px)`,
+                width: `calc(${
+                  100 - (100 / gameMap.length) * layerIndex
+                }% - 10% - 6px)`,
+                height: `calc(${
+                  100 - (100 / gameMap.length) * layerIndex
+                }% - 10% - 6px)`,
+                border: `6px solid ${reactPlaying === 1 ? "#000" : "#fff"}`,
+                animation: gameStart
+                  ? reactPlaying === 1
+                    ? "layer-border-in 0.3s linear normal"
+                    : "layer-border-out 0.3s linear normal"
+                  : "",
+              }}
+            >
+              {layer.map((spot, index) => {
+                return (
                   <div
-                    className="brick"
+                    className="spot"
                     style={{
-                      opacity: spot === 0 ? "0" : "1",
-                      backgroundColor: spot === 1 ? "#000" : "#fff",
+                      left: `calc(${spotSpots[index][0]} - ${
+                        starterRes[0] / 2
+                      }${starterRes[1]} ${
+                        mobile
+                          ? `+ ${spotOffsets[index][0] * 3}px`
+                          : `+ ${spotOffsets[index][0]}px`
+                      })`,
+                      top: `calc(${spotSpots[index][1]} - ${starterRes[0] / 2}${
+                        starterRes[1]
+                      } ${
+                        mobile
+                          ? `+ ${spotOffsets[index][1] * 3}px`
+                          : `+ ${spotOffsets[index][1]}px`
+                      })`,
+                      width: `${starterRes[0]}${starterRes[1]}`,
+                      height: `${starterRes[0]}${starterRes[1]}`,
+                      backgroundColor:
+                        reactPlaying === 1 ? "#404040" : "#bfbfbf",
+                      animation: gameStart
+                        ? reactPlaying === 1
+                          ? "spot-color-out 0.2s linear normal"
+                          : "spot-color-in 0.2s linear normal"
+                        : "",
                     }}
+                    onClick={(e) => {
+                      gameMaster(e);
+                    }}
+                    id={`${layerIndex}-${index}-${spot}`}
                   >
                     <div
-                      className="innerBrick"
+                      className="brick"
                       style={{
-                        backgroundColor: spot === 2 ? "#000" : "#fff",
+                        opacity: spot === 0 ? "0" : "1",
+                        backgroundColor: spot === 1 ? "#000" : "#fff",
                       }}
-                    ></div>
+                    >
+                      <div
+                        className="innerBrick"
+                        style={{
+                          backgroundColor: spot === 2 ? "#000" : "#fff",
+                        }}
+                      ></div>
+                    </div>
                   </div>
-                </div>
-              );
-            })}
-          </div>
-        );
-      })}
-      <div
-        className="backgroundGradient"
-        style={{
-          left: !oppositeMode ? "unset" : reactPlaying === 1 ? "0" : "-200vw",
-          top: !oppositeMode ? (reactPlaying === 1 ? "0" : "-200svh") : "unset",
-          width: !oppositeMode ? "100vw" : "300vw",
-          height: oppositeMode ? "100svh" : "300svh",
-          animation: gameStart
-            ? !oppositeMode
-              ? reactPlaying === 1
-                ? "gradient-opposite-in 0.4s linear normal"
-                : "gradient-opposite-out 0.4s linear normal"
-              : reactPlaying === 1
-              ? "gradient-in 0.4s linear normal"
-              : "gradient-out 0.4s linear normal"
-            : "",
-        }}
-      />
-      <div
-        className="teamInfo white"
-        style={{ opacity: reactPlaying === 1 ? "1" : "0" }}
-      >
-        <h1 className="TeamState whi">{status1}</h1>
-        <h1 className="TeamText white">
-          {reactGameState === 0 ? "placements left:" : "bricks left:"}
-          <br />
-          <span>
-            {reactGameState === 0
-              ? Math.floor(preGameRounds / 2)
-              : brickList[0].length}
-          </span>
-        </h1>
+                );
+              })}
+            </div>
+          );
+        })}
       </div>
-      <div
-        className="teamInfo black"
-        style={{ opacity: reactPlaying === 2 ? "1" : "0" }}
-      >
-        <h1 className="TeamText" style={{ color: "#fff" }}>
-          {reactGameState === 0 ? "placements left:" : "bricks left:"}
-          <br />
-          <span>
-            {reactGameState === 0
-              ? Math.ceil(preGameRounds / 2)
-              : brickList[1].length}
-          </span>
-        </h1>
-        <h1 className="TeamState bla">{status2}</h1>
+      <div className="otherWrapper">
+        <div
+          className="backgroundGradient"
+          style={{
+            left: !oppositeMode ? "unset" : reactPlaying === 1 ? "0" : "-200vw",
+            top: !oppositeMode
+              ? reactPlaying === 1
+                ? "0"
+                : "-200svh"
+              : "unset",
+            width: !oppositeMode ? "100vw" : "300vw",
+            height: oppositeMode ? "100svh" : "300svh",
+            animation: gameStart
+              ? !oppositeMode
+                ? reactPlaying === 1
+                  ? "gradient-opposite-in 0.4s linear normal"
+                  : "gradient-opposite-out 0.4s linear normal"
+                : reactPlaying === 1
+                ? "gradient-in 0.4s linear normal"
+                : "gradient-out 0.4s linear normal"
+              : "",
+          }}
+        />
+        <div
+          className="teamInfo white"
+          style={{ opacity: reactPlaying === 1 ? "1" : "0" }}
+        >
+          <h1 className="TeamState whi">{status1}</h1>
+          <h1 className="TeamText white">
+            {reactGameState === 0 ? "placements left:" : "bricks left:"}
+            <br />
+            <span>
+              {reactGameState === 0
+                ? Math.floor(preGameRounds / 2)
+                : brickList[0].length}
+            </span>
+          </h1>
+        </div>
+        <div
+          className="teamInfo black"
+          style={{ opacity: reactPlaying === 2 ? "1" : "0" }}
+        >
+          <h1 className="TeamText" style={{ color: "#fff" }}>
+            {reactGameState === 0 ? "placements left:" : "bricks left:"}
+            <br />
+            <span>
+              {reactGameState === 0
+                ? Math.ceil(preGameRounds / 2)
+                : brickList[1].length}
+            </span>
+          </h1>
+          <h1 className="TeamState bla">{status2}</h1>
+        </div>
       </div>
     </div>
   );

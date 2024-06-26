@@ -55,7 +55,7 @@
             );
           }
           
-          .innerBrick {
+          .HomeInnerBrick {
             pointer-events: none;
             width: calc(100% - 16px);
             height: calc(100% - 16px);
@@ -190,6 +190,19 @@
     }
 
     .homeTitle {
+
+        div {
+            width: 52px !important;
+            height: 52px !important;
+
+            .HomeInnerBrick {
+                width: calc(100% - 10px) !important;
+                height: calc(100% - 10px) !important;
+                left: 5px !important;
+                top: 5px !important;
+            }
+        }
+
         h1 {
             font-size: 7vh !important;
             line-height: 3vh !important;
