@@ -313,6 +313,19 @@
     bottom: 15%;
     width: 2px;
   }
+
+  .TeamText {
+    font-size: 1.2vw;
+    line-height: 1.8vw;
+  }
+
+  .TeamText span {
+    font-size: 3vw;
+  }
+
+  .TeamState {
+    font-size: 2vw;
+  }
 }
 
 @media screen and (max-width: 450px) {
@@ -342,8 +355,8 @@
   }
 
   .TeamText {
-    font-size: 2vh;
-    line-height: 3vh;
+    font-size: 1.4vh;
+    line-height: 2.6vh;
   }
 
   .TeamText span {
@@ -351,15 +364,19 @@
   }
 
   .TeamState {
-    font-size: 3vh;
+    font-size: 2.5vh;
   }
 
   .black {
     flex-direction: row-reverse;
-    top: 0;
+    top: 2.5%;
     bottom: unset;
     transform: rotate(180deg);
     text-align: end;
+  }
+
+  .white {
+    bottom:2.5%;
   }
 
   .bla {
