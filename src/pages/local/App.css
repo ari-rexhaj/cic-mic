@@ -286,6 +286,31 @@
   }
 }
 
+@media screen and (max-height: 450px) {
+  .layer {
+    border-width: 2px !important;
+  }
+
+  .line1 {
+    top: calc(45% - 2px);
+    height: 2px;
+  }
+  .line2 {
+    left: calc(50% - 2px);
+    width: 2px;
+  }
+  
+  .line3 {
+    right: 5% !important;
+    top: calc(45% - 2px);
+    height: 2px;
+  }
+  .line4 {
+    left: calc(50% - 2px);
+    width: 2px;
+  }
+}
+
 @media screen and (max-width: 450px) {
   .layer {
     border-width: 2px !important;
@@ -309,7 +334,6 @@
     left: calc(50% - 2px);
     width: 2px;
   }
-
 
   .spot {
     width: 32px;

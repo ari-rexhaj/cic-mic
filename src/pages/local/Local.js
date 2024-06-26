@@ -695,8 +695,8 @@ function App() {
           <div
             className="layer"
             style={{
-              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${window.innerWidth > 450?3:0}px)`,
-              top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${window.innerWidth > 450?3:0}px)`,
+              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${(window.innerWidth > 450 && window.innerHeight > 450)?3:0}px)`,
+              top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${(window.innerWidth > 450 && window.innerHeight > 450) > 450?3:0}px)`,
               width: `calc(${
                 100 - (100 / gameMap.length) * layerIndex
               }% - 10% - 6px)`,
@@ -716,8 +716,8 @@ function App() {
                 <div
                   className="spot"
                   style={{
-                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${window.innerWidth > 450?`+ ${spotOffsets[index][0]}`:""})`,
-                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${window.innerWidth > 450?`+ ${spotOffsets[index][1]}`:""})`,
+                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${(window.innerWidth > 450 && window.innerHeight > 450)?`+ ${spotOffsets[index][0]}`:""})`,
+                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${(window.innerWidth > 450 && window.innerHeight > 450)?`+ ${spotOffsets[index][1]}`:""})`,
                     width:`${starterRes[0]}${starterRes[1]}`,
                     height:`${starterRes[0]}${starterRes[1]}`,
                     backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",
