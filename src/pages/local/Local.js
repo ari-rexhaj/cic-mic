@@ -137,7 +137,7 @@ let newWall = false; //has a new wall been found?
 let brickList = [[], []]; //list of all bricks on board per team
 let possibleMoves = undefined;
 let gameStart = false;
-let canFly = [false, false];
+
 let currentBrick = undefined;
 let currentBrickDiv = undefined;
 let gotoBrick = undefined;
@@ -274,9 +274,10 @@ function App() {
     if (gameState === 1) {
       //midgame
       handleStatusUpdate("moving a brick", enemy);
+      let endgame = false;
       //endgame
       if (brickList[playing - 1].length < 4) {
-        canFly[playing - 1] = true;
+        endgame = true;
       }
 
       if (currentBrick === undefined) {
@@ -304,7 +305,7 @@ function App() {
         currentBrick = brickDiv.target.id;
         currentBrickDiv = brickDiv;
         possibleMoves = possibleMovesGen(currentBrick);
-        if (possibleMoves.length === 0 && !canFly[playing - 1]) {
+        if (possibleMoves.length === 0 && !endgame) {
           currentBrick = undefined;
           currentBrickDiv = undefined;
           handleStatusUpdate("brick can't move!", playing);
@@ -356,7 +357,7 @@ function App() {
 
       if (currentBrick.split("-")[2] === brickDiv.target.id.split("-")[2]) {
         let testMoves = possibleMovesGen(brickDiv.target.id);
-        if (testMoves.length === 0 && !canFly[playing - 1]) {
+        if (testMoves.length === 0 && !endgame) {
           handleStatusUpdate("brick can't move!", playing);
 
           if (playing === 1) {
@@ -410,7 +411,7 @@ function App() {
       let moveSuccess = false;
       let newMap = undefined;
 
-      if (!canFly[playing - 1]) {
+      if (!endgame) {
         let moveResult = moveBrick(currentBrick, gotoBrick, possibleMoves);
         moveSuccess = moveResult[0];
         newMap = moveResult[1];
@@ -459,7 +460,7 @@ function App() {
         currentBrick = undefined;
         currentBrickDiv = undefined;
 
-        if (!canFly[playing - 1]) {
+        if (!endgame) {
           let hasAPossibleMove = false;
           for (let brick of brickList[enemy - 1]) {
             if (possibleMovesGen(brick).length !== 0) {
