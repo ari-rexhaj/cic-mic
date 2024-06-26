@@ -205,24 +205,14 @@
   width: 6px;
 }
 
-.gameInfo {
-  position: absolute;
-  width: 98%;
-  height: 11vh;
-  padding: 0 1%;
-  bottom: 0;
-  left: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
 .teamInfo {
   display: flex;
+  position: absolute;
   justify-content: space-between;
-  width: 50%;
+  width: 49%;
   align-items: center;
   transition: 0.3s;
+  bottom: 0;
 }
 
 .TeamText {
@@ -242,7 +232,12 @@
   height: 100%;
 }
 
+.white {
+  left: 1%;
+}
+
 .black {
+  right: 1%;
   color: #fff;
 }
 
@@ -272,6 +267,14 @@
     justify-content: space-evenly;
   }
 
+  .black {
+    right: unset;
+  }
+
+  .white {
+    left:unset
+  }
+
   .TeamText {
     font-size: 2vh;
     line-height: 4vh;
@@ -297,6 +300,7 @@
   }
   .line2 {
     left: calc(50% - 2px);
+    top: 5% !important;
     width: 2px;
   }
   
@@ -307,6 +311,7 @@
   }
   .line4 {
     left: calc(50% - 2px);
+    bottom: 15%;
     width: 2px;
   }
 }
@@ -317,27 +322,24 @@
   }
 
   .line1 {
-    top: calc(45% - 2px);
+    top: calc(50% - 2px);
     height: 2px;
   }
   .line2 {
     left: calc(50% - 2px);
+    top: 12.5% !important;
     width: 2px;
   }
   
   .line3 {
     right: 5% !important;
-    top: calc(45% - 2px);
+    top: calc(50% - 2px);
     height: 2px;
   }
   .line4 {
     left: calc(50% - 2px);
+    bottom: 12.5%;
     width: 2px;
-  }
-
-  .spot {
-    width: 32px;
-    height: 32px;
   }
 
   .TeamText {
@@ -351,6 +353,12 @@
 
   .TeamState {
     font-size: 3vh;
+  }
+
+  .black {
+    top: 0;
+    bottom: unset;
+    transform: rotate(180deg);
   }
 }
 

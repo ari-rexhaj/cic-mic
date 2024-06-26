@@ -691,17 +691,19 @@ function App() {
         }}
       />
       {gameMap.map((layer, layerIndex) => {
+        let mobile = window.innerWidth > 450 && window.innerHeight > 450
+        let oppositeMode = window.innerWidth > 450
         return (
           <div
             className="layer"
             style={{
-              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${(window.innerWidth > 450 && window.innerHeight > 450)?3:0}px)`,
-              top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${(window.innerWidth > 450 && window.innerHeight > 450) > 450?3:0}px)`,
+              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${mobile?3:0}px)`,
+              top: `calc(${(50 / gameMap.length) * layerIndex}% + ${oppositeMode?"5%":"12.5%"} - ${mobile > 450?3:0}px)`,
               width: `calc(${
                 100 - (100 / gameMap.length) * layerIndex
               }% - 10% - 6px)`,
               height: `calc(${
-                90 - (100 / gameMap.length) * layerIndex
+               (oppositeMode?90:85) - (100 / gameMap.length) * layerIndex
               }% - 10% - 6px)`,
               border: `6px solid ${reactPlaying === 1 ? "#000" : "#fff"}`,
               animation: gameStart
@@ -716,8 +718,8 @@ function App() {
                 <div
                   className="spot"
                   style={{
-                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${(window.innerWidth > 450 && window.innerHeight > 450)?`+ ${spotOffsets[index][0]}`:""})`,
-                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${(window.innerWidth > 450 && window.innerHeight > 450)?`+ ${spotOffsets[index][1]}`:""})`,
+                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][0]}`:""})`,
+                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${mobile?`+ ${spotOffsets[index][1]}`:""})`,
                     width:`${starterRes[0]}${starterRes[1]}`,
                     height:`${starterRes[0]}${starterRes[1]}`,
                     backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",
@@ -763,7 +765,6 @@ function App() {
             : "",
         }}
       />
-      <div className="gameInfo">
         <div
           className="teamInfo white"
           style={{ opacity: reactPlaying === 1 ? "1" : "0" }}
@@ -783,7 +784,7 @@ function App() {
           className="teamInfo black"
           style={{ opacity: reactPlaying === 2 ? "1" : "0" }}
         >
-          <h1 className="TeamText black">
+          <h1 className="TeamText" style={{color:"#fff"}}>
             {reactGameState === 0 ? "placements left:" : "bricks left:"}
             <br />
             <span>
@@ -795,7 +796,6 @@ function App() {
           <h1 className="TeamState bla">{status2}</h1>
         </div>
       </div>
-    </div>
   );
 }
 
