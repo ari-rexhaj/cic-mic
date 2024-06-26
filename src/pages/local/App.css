@@ -356,9 +356,15 @@
   }
 
   .black {
+    flex-direction: row-reverse;
     top: 0;
     bottom: unset;
     transform: rotate(180deg);
+    text-align: end;
+  }
+
+  .bla {
+    text-align: start;
   }
 }
 
