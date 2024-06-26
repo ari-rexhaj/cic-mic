@@ -161,7 +161,6 @@ function App() {
   const [starterRes, setStarterRes] = useState(starterValue);
 
   window.onresize = () => {
-    console.log("resize");
     if (window.innerWidth < window.innerHeight) {
       setStarterRes([2.2, "vh"]);
     } else {
@@ -236,7 +235,6 @@ function App() {
             }
           }
           allBricksWalled = false;
-          console.log(wallList);
         }
         //if the player can remove brick, the next click event will turn brick to team 0 (unoccupied)
         for (let i = 0; i < brickList[enemy - 1].length; i++) {
@@ -269,7 +267,6 @@ function App() {
         }
         let hasAPossibleMove = false;
         for (let brick of brickList[enemy - 1]) {
-          console.log(possibleMovesGen(brick),brick)
           if (possibleMovesGen(brick).length !== 0) {
             hasAPossibleMove = true;
             break;
