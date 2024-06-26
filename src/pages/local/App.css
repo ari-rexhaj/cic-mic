@@ -42,6 +42,8 @@
 }
 
 .brick {
+  min-width: 32px;
+  min-height: 32px;
   transform: rotate(0deg);  /*makes this stupid shit behave*/
   opacity: 0;
   transition: 0.1s;
@@ -159,8 +161,6 @@
 .spot {
   position: absolute;
   z-index: 100;
-  width: 4vh;
-  height: 4vh;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -287,6 +287,30 @@
 }
 
 @media screen and (max-width: 450px) {
+  .layer {
+    border-width: 2px !important;
+  }
+
+  .line1 {
+    top: calc(45% - 2px);
+    height: 2px;
+  }
+  .line2 {
+    left: calc(50% - 2px);
+    width: 2px;
+  }
+  
+  .line3 {
+    right: 5% !important;
+    top: calc(45% - 2px);
+    height: 2px;
+  }
+  .line4 {
+    left: calc(50% - 2px);
+    width: 2px;
+  }
+
+
   .spot {
     width: 32px;
     height: 32px;

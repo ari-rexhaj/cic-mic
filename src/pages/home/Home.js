@@ -108,7 +108,7 @@ const Home = () => {
         </p>
         <p>
           <strong>5.</strong> if you've formed a wall, but all enemy bricks are
-          walled. The game will proceed without removing a brick from the enemy
+          walled. Rule 2 is vetoed and you can remove a walled brick.
         </p>
 
         <h2>gameplay:</h2>

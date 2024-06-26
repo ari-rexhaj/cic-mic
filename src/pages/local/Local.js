@@ -16,6 +16,18 @@ const spotSpots = [
   ["0%", "100%"],
   ["0%", "50%"],
 ];
+
+const spotOffsets = [
+  ["-3px","-3px"],
+  ["0px","-3px"],
+  ["3px","-3px"],
+  ["3px","0px"],
+  ["3px","3px"],
+  ["0px","3px"],
+  ["-3px","3px"],
+  ["-3px","0px"]
+]
+
 const layerAmount = 3;
 
 function generateMap(layers) {
@@ -131,9 +143,9 @@ let currentBrickDiv = undefined;
 let gotoBrick = undefined;
 let allBricksWalled = false;
 
-let starterRes = "2vh";
-if (window.innerWidth < 450) {
-  starterRes = "16px";
+let starterValue = [2.2,"vw"]
+if(window.innerWidth < window.innerHeight) {
+  starterValue = [2.2,"vh"]
 }
 
 function App() {
@@ -141,6 +153,19 @@ function App() {
   const [reactGameState, setGameState] = useState(gameState);
   const [status1, setStatus1] = useState("Making the first move!");
   const [status2, setStatus2] = useState("thy trespass has not gone unseen...");
+  const [starterRes,setStarterRes] = useState(starterValue)
+  
+  window.onresize = () => {
+    console.log("resize")
+    if(window.innerWidth < window.innerHeight) {
+      setStarterRes([2.2,"vh"])
+    }
+    else{
+      setStarterRes([2.2,"vw"])
+    }
+  }
+  
+
 
   function handleStatusUpdate(value, team) {
     if (team === 1) {
@@ -670,8 +695,8 @@ function App() {
           <div
             className="layer"
             style={{
-              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
-              top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - 3px)`,
+              left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${window.innerWidth > 450?3:0}px)`,
+              top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${window.innerWidth > 450?3:0}px)`,
               width: `calc(${
                 100 - (100 / gameMap.length) * layerIndex
               }% - 10% - 6px)`,
@@ -691,8 +716,10 @@ function App() {
                 <div
                   className="spot"
                   style={{
-                    left: `calc(${spotSpots[index][0]} - ${starterRes})`,
-                    top: `calc(${spotSpots[index][1]} - ${starterRes})`,
+                    left: `calc(${spotSpots[index][0]} - ${starterRes[0]/2}${starterRes[1]} ${window.innerWidth > 450?`+ ${spotOffsets[index][0]}`:""})`,
+                    top: `calc(${spotSpots[index][1]} - ${starterRes[0]/2}${starterRes[1]} ${window.innerWidth > 450?`+ ${spotOffsets[index][1]}`:""})`,
+                    width:`${starterRes[0]}${starterRes[1]}`,
+                    height:`${starterRes[0]}${starterRes[1]}`,
                     backgroundColor: reactPlaying === 1 ? "#404040" : "#bfbfbf",
                     animation: gameStart
                       ? reactPlaying === 1
