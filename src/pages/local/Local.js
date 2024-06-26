@@ -208,10 +208,29 @@ function App() {
               return;
             }
           }
-        } else {
-          allBricksWalled = false;
         }
-
+        else {
+          for (let i in wallList[enemy - 1]) {
+            if (wallList[enemy - 1][i].includes(brickDiv.target.id)) {
+              let brokenWall = wallList[enemy - 1].splice(i, 1);
+              for (let brick of brokenWall[0]) {
+                let inOtherWall = false;
+                for (let wall of wallList[enemy - 1]) {
+                  if (wall.includes(brick)) {
+                    inOtherWall = true;
+                    break;
+                  }
+                }
+                
+                if (!inOtherWall) {
+                  document.getElementById(brick).children[0].className = "brick";
+                }
+              }
+            }
+          }
+          allBricksWalled = false
+          console.log(wallList)
+        }
         //if the player can remove brick, the next click event will turn brick to team 0 (unoccupied)
         for (let i = 0; i < brickList[enemy - 1].length; i++) {
           if (brickList[enemy - 1][i] === brickDiv.target.id) {
