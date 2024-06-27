@@ -50,8 +50,6 @@
 }
 
 .brick {
-  min-width: 38px;
-  min-height: 38px;
   transform: rotate(0deg);  /*makes this stupid shit behave*/
   opacity: 0;
   transition: 0.1s;
@@ -167,6 +165,8 @@
 }
 
 .spot {
+  min-width: 38px;
+  min-height: 38px;
   position: absolute;
   z-index: 100;
   display: flex;
