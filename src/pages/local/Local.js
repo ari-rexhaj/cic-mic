@@ -144,9 +144,11 @@ let gotoBrick = undefined;
 let allBricksWalled = false;
 let canMoveBricks = true;
 
-let starterValue = [3.2, "vw"];
+const spotSize = 3.2
+
+let starterValue = [spotSize, "vw"];
 if (window.innerWidth < window.innerHeight) {
-  starterValue = [3.2, "vh"];
+  starterValue = [spotSize, "vh"];
 }
 
 let oppositeMode = false;
@@ -163,9 +165,9 @@ function App() {
 
   window.onresize = () => {
     if (window.innerWidth < window.innerHeight) {
-      setStarterRes([3.2, "vh"]);
+      setStarterRes([spotSize, "vh"]);
     } else {
-      setStarterRes([3.2, "vw"]);
+      setStarterRes([spotSize, "vw"]);
     }
     if (window.innerWidth > 450) {
       oppositeMode = true;
