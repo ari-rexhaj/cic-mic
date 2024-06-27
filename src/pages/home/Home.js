@@ -26,16 +26,15 @@ const Home = () => {
   function handleButtonPress(index) {
     if (index === 0) {
       //open local menu
-      if (local1 === true) {
-        setLocal1(false);
-      } else {
-        setLocal1(true);
+      setLocal1(!local1);
+      if (!local1) {
+        setLocal2(false)
       }
     }
     if (index === 1) {
       //opens bot difficulty menu
-      setLocal2(true);
-    }
+      setLocal2(!local2)
+    } 
   }
 
   return (
@@ -75,18 +74,18 @@ const Home = () => {
               handleButtonPress(1);
             }}
           >
-            VS bot (COMING SOON)
+            VS bot (WIP)
           </button>
           <div
             className="homeOptions opt2"
             style={{ display: local2 ? "flex" : "none" }}
           >
             <div className="homeOptionsLine" />
-            <button onClick={() => {}}>Godly</button>
-            <button onClick={() => {}}>Master</button>
-            <button onClick={() => {}}>Challenger</button>
-            <button onClick={() => {}}>Novice</button>
-            <button onClick={() => {}}>Beginner</button>
+            <button onClick={() => {}}>Skanderberg (WIP)</button>
+            <button onClick={() => {}}>Master (WIP)</button>
+            <button onClick={() => {}}>Challenger (WIP)</button>
+            <button onClick={() => {}}>Novice (WIP)</button>
+            <button onClick={() => {}}>Serbian (WIP)</button>
           </div>
         </div>
       </div>
@@ -95,7 +94,7 @@ const Home = () => {
           /*window.open("/multiplayer","_self")*/
         }}
       >
-        Play multiplayer (COMING SOON)
+        Play online (WIP)
       </button>
       <div className="howTo">
         <h2>how to play cic mic, an albanian board game</h2>

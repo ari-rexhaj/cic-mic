@@ -126,15 +126,16 @@
         transition: 0.4s;
         width: 300px;
         height: 40px;
-        background-color: white;
-        color: black;
-        border-radius: 6px;
-        border: 2px solid #e3e3e3;
+        background-color: rgb(0, 0, 0);
+        color: rgb(255, 255, 255);
+        border-radius: 10px;
+        border: 3px solid #aaaaaa;
+        font-weight: 600;
 
         &:hover {
             cursor: pointer;
             transition: 0.1s;
-            background-color: rgb(243, 243, 243);
+            background-color: rgb(80, 80, 80);
         }
     }
 
