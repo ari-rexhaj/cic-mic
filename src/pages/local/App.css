@@ -165,8 +165,6 @@
 }
 
 .spot {
-  min-width: 38px;
-  min-height: 38px;
   position: absolute;
   z-index: 100;
   display: flex;

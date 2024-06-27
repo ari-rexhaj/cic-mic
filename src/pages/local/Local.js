@@ -176,6 +176,14 @@ function App() {
     }
   };
 
+  window.screen.orientation.addEventListener("change", (e) => {
+    if (window.innerWidth > 450) {
+      oppositeMode = true;
+    } else {
+      oppositeMode = false;
+    }
+  })
+
   function handleStatusUpdate(value, team) { //is a helpful function for easily updating the status of the teamStates
     if (team === 1) {
       setStatus1(value);
