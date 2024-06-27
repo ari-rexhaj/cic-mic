@@ -187,7 +187,6 @@ function App() {
     } else {
       oppositeMode = false;
     }
-    console.log(e)
   })
   function handleStatusUpdate(value, team) { //is a helpful function for easily updating the status of the teamStates
     if (team === 1) {
