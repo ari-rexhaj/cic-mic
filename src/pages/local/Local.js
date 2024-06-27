@@ -144,7 +144,7 @@ let gotoBrick = undefined;
 let allBricksWalled = false;
 let canMoveBricks = true;
 
-const spotSize = 3.2
+const spotSize = 3.2;
 
 let starterValue = [spotSize, "vw"];
 if (window.innerWidth < window.innerHeight) {
@@ -184,6 +184,7 @@ function App() {
       setStatus2(value);
     }
   }
+
   function gameMaster(brickDiv) {
     if (gameState === 2) {
       return;
@@ -247,13 +248,6 @@ function App() {
           }
         }
 
-        if (brickList[enemy - 1].length < 3 && gameState === 1) {
-          gameState = 2;
-          setGameState(2);
-          handleStatusUpdate("You won!", playing);
-          return;
-        }
-
         updateMapSpot(brickDiv, 0);
         newWall = false;
         for (let wall of wallList[enemy - 1]) {
@@ -278,7 +272,7 @@ function App() {
             }
           }
           if (!hasAPossibleMove) {
-            handleStatusUpdate("Enemy has no moves, play again", playing);
+            handleStatusUpdate("Enemy has no moves, playing again", playing);
             return;
           }
         }
@@ -590,6 +584,14 @@ function App() {
         switchTurn();
       }
     } else {
+
+      if (brickList[enemy - 1].length === 3 && gameState === 1) {
+        gameState = 2;
+        setGameState(2);
+        handleStatusUpdate("You won!", playing);
+        return;
+      }
+
       for (let brick of wallList[playing - 1][
         wallList[playing - 1].length - 1
       ]) {
@@ -711,7 +713,13 @@ function App() {
   const [gameMap, setGameMap] = useState(generateMap(layerAmount));
   return (
     <div className="GameWrapper">
-      <div className="layersWrapper" style={{height:oppositeMode?"90svh":"85svh",top:oppositeMode?"0":"7.5%"}}>
+      <div
+        className="layersWrapper"
+        style={{
+          height: oppositeMode ? "90svh" : "85svh",
+          top: oppositeMode ? "0" : "7.5%",
+        }}
+      >
         <div
           className="line1"
           style={{
@@ -765,7 +773,9 @@ function App() {
                 left: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${
                   mobile ? 3 : 0
                 }px)`,
-                top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${mobile > 450 ? 3 : 0}px)`,
+                top: `calc(${(50 / gameMap.length) * layerIndex}% + 5% - ${
+                  mobile > 450 ? 3 : 0
+                }px)`,
                 width: `calc(${
                   100 - (100 / gameMap.length) * layerIndex
                 }% - 10% - 6px)`,
