@@ -187,6 +187,7 @@ function App() {
 
   function gameMaster(brickDiv) {
     if (gameState === 2) {
+      window.location.reload();
       return;
     }
     //controls the game
@@ -585,13 +586,6 @@ function App() {
       }
     } else {
 
-      if (brickList[enemy - 1].length === 3 && gameState === 1) {
-        gameState = 2;
-        setGameState(2);
-        handleStatusUpdate("You won!", playing);
-        return;
-      }
-
       for (let brick of wallList[playing - 1][
         wallList[playing - 1].length - 1
       ]) {
@@ -604,7 +598,14 @@ function App() {
           document.getElementById(brick).children[0].className = "walled";
         }
       }
-      //if all enemy bricks are in walls, move on to next turn without removing any bricks
+
+      if (brickList[enemy - 1].length === 3 && gameState === 1) {
+        gameState = 2;
+        setGameState(2);
+        handleStatusUpdate("You won!", playing);
+        return;
+      }
+
       if (wallList[enemy - 1].length === 0) {
         return;
       }
