@@ -135,33 +135,33 @@ let playing = 1; //what team is playing 1 = team1 and 2 = team2, 0 is used to re
 let enemy = 2; //what team is waiting for their turn
 let newWall = false; //has a new wall been found?
 let brickList = [[], []]; //list of all bricks on board per team
-let possibleMoves = undefined;
-let gameStart = false;
-let endgame = [false, false];
-let currentBrick = undefined;
-let currentBrickDiv = undefined;
-let gotoBrick = undefined;
-let allBricksWalled = false;
-let canMoveBricks = true;
+let possibleMoves = undefined; //possible moves
+let gameStart = false; //is for preventing the gradient animation from playing when loading the page, will turn true as soon as game starts.
+let endgame = [false, false]; //stores players endgame states
+let currentBrick = undefined; //for midgame, remembers which brick you clicked to move
+let currentBrickDiv = undefined; //same as above, but stores the Div instead of position
+let gotoBrick = undefined; //for midgame, is the spot you'd like to goto/move to
+let allBricksWalled = false; //is for knowing whether all enemy bricks are walled or not
+let canMoveBricks = true; //same as above, but if the enemy has any possible moves
 
-const spotSize = 3.2;
+const spotSize = 3.2; //size of spots
 
 let starterValue = [spotSize, "vw"];
 if (window.innerWidth < window.innerHeight) {
   starterValue = [spotSize, "vh"];
 }
 
-let oppositeMode = false;
+let oppositeMode = false; //mobile version of the board where the team info is on opposite sides of the screen.
 if (window.innerWidth > 450) {
   oppositeMode = true;
 }
 
 function App() {
-  const [reactPlaying, setPlaying] = useState(playing);
-  const [reactGameState, setGameState] = useState(gameState);
-  const [status1, setStatus1] = useState("Making the first move!");
+  const [reactPlaying, setPlaying] = useState(playing); //same as playing but this helps react update the board
+  const [reactGameState, setGameState] = useState(gameState); //same as above but for gameState
+  const [status1, setStatus1] = useState("Making the first move!"); //the teamState text
   const [status2, setStatus2] = useState("thy trespass has not gone unseen...");
-  const [starterRes, setStarterRes] = useState(starterValue);
+  const [starterRes, setStarterRes] = useState(starterValue); //spot size
 
   window.onresize = () => {
     if (window.innerWidth < window.innerHeight) {
@@ -176,7 +176,7 @@ function App() {
     }
   };
 
-  function handleStatusUpdate(value, team) {
+  function handleStatusUpdate(value, team) { //is a helpful function for easily updating the status of the teamStates
     if (team === 1) {
       setStatus1(value);
     }
@@ -185,15 +185,15 @@ function App() {
     }
   }
 
-  function gameMaster(brickDiv) {
-    if (gameState === 2) {
+  function gameMaster(brickDiv) { //the big bertha, the cancer ive concocded, the unholy trinity. The gameMaster
+    if (gameState === 2) { //reloads the page if board is clicked after someone won, letting you play again.
       window.location.reload();
       return;
     }
     //controls the game
     gameStart = true;
     canMoveBricks = true;
-    function switchTurn() {
+    function switchTurn() { //switches turns
       if (playing === 1) {
         playing = 2;
         enemy = 1;
@@ -213,7 +213,7 @@ function App() {
         handleStatusUpdate("can only remove enemy bricks!", playing);
         return;
       } else {
-        if (!allBricksWalled) {
+        if (!allBricksWalled) { //if not all bricks are walled, cannot remove a walled brick
           for (let wall of wallList[enemy - 1]) {
             if (wall.includes(brickDiv.target.id)) {
               handleStatusUpdate("can't remove walled brick!", playing);
@@ -221,28 +221,28 @@ function App() {
             }
           }
         } else {
-          for (let i in wallList[enemy - 1]) {
-            if (wallList[enemy - 1][i].includes(brickDiv.target.id)) {
-              let brokenWall = wallList[enemy - 1].splice(i, 1);
-              for (let brick of brokenWall[0]) {
+          for (let i in wallList[enemy - 1]) { //updates the wallList by removing walls that are no longer formed
+            if (wallList[enemy - 1][i].includes(brickDiv.target.id)) { //if wallList's current wall in the loop includes the brick you've clicked...
+              let brokenWall = wallList[enemy - 1].splice(i, 1); //store and removes wall as brokenWall
+              for (let brick of brokenWall[0]) { //loop bricks in brokenWall...
                 let inOtherWall = false;
-                for (let wall of wallList[enemy - 1]) {
-                  if (wall.includes(brick)) {
+                for (let wall of wallList[enemy - 1]) { //loops walls in allList...
+                  if (wall.includes(brick)) { //check if bricks in brokenWall are in other walls
                     inOtherWall = true;
                     break;
                   }
                 }
 
-                if (!inOtherWall) {
+                if (!inOtherWall) { //if brick was not in other wall, remove "walled" style/revert to "brick" style
                   document.getElementById(brick).children[0].className =
                     "brick";
                 }
               }
             }
           }
-          allBricksWalled = false;
+          allBricksWalled = false; //resets allBricksWalled back to false
         }
-        //if the player can remove brick, the next click event will turn brick to team 0 (unoccupied)
+        //if the player can remove a brick, the next click event will turn brick to team 0 (unoccupied)
         for (let i = 0; i < brickList[enemy - 1].length; i++) {
           if (brickList[enemy - 1][i] === brickDiv.target.id) {
             brickList[enemy - 1].splice(i, 1);
