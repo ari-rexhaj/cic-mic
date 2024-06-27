@@ -1,5 +1,6 @@
 import "./App.css";
 import { useState } from "react";
+import { Helmet } from "react-helmet-async";
 //map states:
 //0 => empty/unoccupied
 //1 => white team
@@ -726,6 +727,21 @@ function App() {
   const [gameMap, setGameMap] = useState(generateMap(layerAmount));
   return (
     <div className="GameWrapper">
+      <Helmet>
+        <title>cic mic local</title>
+        <meta property="og:title" content="start a cic mic local game!"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:image" content="%PUBLIC_URL%/cic-mic.png"/>
+        <meta property="og:url" content="https://cic-mic.com/local"/>
+        <meta property="og:description" content="Play a game of cic mic with a friend! Supports mobile, tablet and desktop!"/>
+        <meta property="og:site_name" content="cic mic"/>
+        <meta name="twitter:card" content="summary"/>
+        <meta name="twitter:title" content="start a cic mic local game!"/>
+        <meta name="twitter:site" content="https://cic-mic.com"/>
+        <meta name="twitter:image" content="%PUBLIC_URL%/cic-mic.png"/>
+        <meta name="twitter:description" content="Play a game of cic mic with a friend! Supports mobile, tablet and desktop!"/>
+        <meta name="description" content="Play a game of cic mic with a friend! Supports mobile, tablet and desktop!" />
+      </Helmet>
       <div
         className="layersWrapper"
         style={{

@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import {Helmet} from "react-helmet-async";
 import "./Home.scss";
 
 let trademark = [
@@ -39,6 +40,22 @@ const Home = () => {
 
   return (
     <div className="homeWrapper">
+      <Helmet>
+      <title>cic mic, an albanian board game. Simple but hard board game</title>
+      <meta property="og:title" content="cic mic, an albanian board game"/>
+      <meta property="og:type" content="website"/>
+      <meta property="og:image" content="%PUBLIC_URL%/cic-mic.png"/>
+      <meta property="og:url" content="https://cic-mic.com"/>
+      <meta property="og:description" content="Play cic mic, a simple but strategic board game. Supports your phone, laptop or tablet and can be played with a friend, or online for free with no ads!"/>
+      <meta property="og:site_name" content="cic-mic.com"/>
+      <meta name="twitter:card" content="summary"/>
+      <meta name="twitter:title" content="cic mic, an albanian board game"/>
+      <meta name="twitter:site" content="https://cic-mic.com"/>
+      <meta name="twitter:image" content="%PUBLIC_URL%/cic-mic.png"/>
+      <meta name="twitter:description" content="Play cic mic, a simple but strategic board game. Supports your phone, laptop or tablet and can be played with a friend, or online for free with no ads!"/>
+      <meta name="description" content="Play cic mic, a simple but strategic board game. Supports your phone, laptop or tablet and can be played with a friend, or online for free with no ads!" />
+      <link rel="canonical" href="https://cic-mic.com"/>
+      </Helmet>
       <div className="homeTitle">
         <div>
           <div className="HomeInnerBrick" />
